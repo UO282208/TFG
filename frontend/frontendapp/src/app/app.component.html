@@ -1,18 +1,7 @@
-<div>
-    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-      <table>
-        <tr>
-          <td>File to upload:</td>
-          <td><input type="file" (change)="onFileChange($event)" /></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><button type="submit">Upload</button></td>
-        </tr>
-      </table>
-    </form>
+<div class="container">
+  <div>
+    <h3>Prueba</h3>
   </div>
-  
-  <div  *ngFor="let file of files">
-    <div>{{file}}</div>
-  </div>
+</div>
+
+<app-file-upload></app-file-upload>
