@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.*;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileSystemStorageService implements StorageService {
 
 	private final Path rootLocation;
+	private final static String FILE_RESPONSE_LOCATION = "http://localhost:8080/api/";
 
 	@Autowired
 	public FileSystemStorageService(StorageProperties properties) {
@@ -105,5 +107,15 @@ public class FileSystemStorageService implements StorageService {
 		catch (IOException e) {
 			throw new StorageException("Could not initialize storage", e);
 		}
+	}
+
+	@Override
+	public List<String> trim(List<String> strings) {
+		List<String> trimmedStrings = new ArrayList<>(strings.size());
+    
+		for (String string : strings) {
+			trimmedStrings.add(string.substring(FILE_RESPONSE_LOCATION.length()));
+		}
+		return trimmedStrings;
 	}
 }

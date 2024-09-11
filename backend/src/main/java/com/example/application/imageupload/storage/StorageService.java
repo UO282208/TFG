@@ -1,5 +1,7 @@
 package com.example.application.imageupload.storage;
 
+import java.util.List;
+
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,5 +21,7 @@ public interface StorageService {
 	Resource loadAsResource(String filename);
 
 	void deleteAll();
+
+	List<String> trim(List<String> strings);
 
 }

@@ -18,11 +18,18 @@
 
 <div class="card mt-3">
   <div class="card-header">List of Files</div>
+  <div class="col-4">
+    <button class="btn btn-success btn-sm" (click)="ngOnInit()">
+      Load files
+    </button>
+  </div>
   <ul class="list-group list-group-flush">
-    @for (file of fileInfos | async; track file.name) {
+    @for (file of fileInfos | async; track file) {
     <li class="list-group-item">
-      <a href="{{ file.url }}">{{ file.name }}</a>
+      <a href="{{ file }}">{{ file }}</a>
     </li>
     }
   </ul>
+
+  
 </div>
