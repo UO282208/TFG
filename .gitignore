@@ -32,6 +32,7 @@ build/
 env/
 dataset/
 storefiles/
+runs/
 
 ### VS Code ###
 .vscode/
