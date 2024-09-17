@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileSystemStorageService implements StorageService {
 
 	private final Path rootLocation;
+	private final Path resultsLocation;
 	private final static String FILE_RESPONSE_LOCATION = "http://localhost:8080/api/";
+	private final static String AI_PREDICTING_FILE_LOCATION = "c:/Users/Usuario/Documents/TFG/backend/src/main/yolov8/predictimg.py";
 
 	@Autowired
 	public FileSystemStorageService(StorageProperties properties) {
@@ -31,6 +33,7 @@ public class FileSystemStorageService implements StorageService {
         }
 
 		this.rootLocation = Paths.get(properties.getLocation());
+		this.resultsLocation = Paths.get(properties.getResultsLocation());
 	}
 
 	@Override
@@ -60,9 +63,9 @@ public class FileSystemStorageService implements StorageService {
 	@Override
 	public Stream<Path> loadAll() {
 		try {
-			return Files.walk(this.rootLocation, 1)
-				.filter(path -> !path.equals(this.rootLocation))
-				.map(this.rootLocation::relativize);
+			return Files.walk(this.resultsLocation, 1)
+				.filter(path -> !path.equals(this.resultsLocation))
+				.map(this.resultsLocation::relativize);
 		}
 		catch (IOException e) {
 			throw new StorageException("Failed to read stored files", e);
@@ -72,7 +75,7 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public Path load(String filename) {
-		return rootLocation.resolve(filename);
+		return resultsLocation.resolve(filename);
 	}
 
 	@Override
@@ -103,6 +106,7 @@ public class FileSystemStorageService implements StorageService {
 	public void init() {
 		try {
 			Files.createDirectories(rootLocation);
+			Files.createDirectories(resultsLocation);
 		}
 		catch (IOException e) {
 			throw new StorageException("Could not initialize storage", e);
@@ -117,5 +121,19 @@ public class FileSystemStorageService implements StorageService {
 			trimmedStrings.add(string.substring(FILE_RESPONSE_LOCATION.length()));
 		}
 		return trimmedStrings;
+	}
+
+	@Override
+	public void processFile(String filename) {
+		ProcessBuilder processBuilder = new ProcessBuilder("python", AI_PREDICTING_FILE_LOCATION, filename);
+		processBuilder.redirectErrorStream(true);
+
+		Process process;
+		try {
+			process = processBuilder.start();
+			process.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

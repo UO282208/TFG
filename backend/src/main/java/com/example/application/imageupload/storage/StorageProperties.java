@@ -9,6 +9,7 @@ public class StorageProperties {
 	 * Folder location for storing files
 	 */
 	private String location = "storefiles/";
+	private String resultsLocation = "storefiles/results";
 
 	public String getLocation() {
 		return location;
@@ -18,4 +19,11 @@ public class StorageProperties {
 		this.location = location;
 	}
 
+	public String getResultsLocation() {
+		return resultsLocation;
+	}
+
+	public void setResultsLocation(String resultsLocation) {
+		this.resultsLocation = resultsLocation;
+	}
 }

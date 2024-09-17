@@ -23,10 +23,10 @@
       Load files
     </button>
   </div>
-  <ul class="list-group list-group-flush">
+  <ul class="image-grid">
     @for (file of fileInfos | async; track file) {
-    <li class="list-group-item">
-      <a href="{{ file }}">{{ file }}</a>
+    <li class="image-item">
+      <img  class="images" src={{file}}/> 
     </li>
     }
   </ul>

@@ -41,7 +41,7 @@ public class FileUploadController{
                     "serveFile", path.getFileName().toString()).build().toUri().toString())
             .collect(Collectors.toList());
 		
-		files = storageService.trim(files);
+		//files = storageService.trim(files);
 		
         return ResponseEntity.ok(files);
 	}
@@ -63,6 +63,7 @@ public class FileUploadController{
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
 
 		storageService.store(file);
+		storageService.processFile(file.getOriginalFilename());
 
 		return ResponseEntity.ok("File uploaded successfully");
 	}
