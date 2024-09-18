@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 
-import { FileUploadService } from './file-upload.service';
-
+import { FileUploadService } from './services/file-upload/file-upload.service';
+import { ListFilesService } from './services/list-files/list-files.service';
 @NgModule({
   declarations: [
     AppComponent,   
@@ -18,7 +18,7 @@ import { FileUploadService } from './file-upload.service';
     FormsModule,    
     CommonModule,  
   ],
-  providers: [FileUploadService],
+  providers: [FileUploadService, ListFilesService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

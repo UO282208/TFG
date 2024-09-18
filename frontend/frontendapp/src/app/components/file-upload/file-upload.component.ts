@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FileUploadService } from '../../services/file-upload.service';
+import { FileUploadService } from '../../services/file-upload/file-upload.service';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-file-upload',
@@ -12,12 +12,11 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./file-upload.component.css']
 })
 
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent {
   currentFile?: File;
   message = '';
-  fileInfos?: Observable<any>;
 
-  constructor(private fileUploadService: FileUploadService) { }
+  constructor(private fileUploadService: FileUploadService, private router: Router) { }
 
   selectFile(event: any): void {
     this.currentFile = event.target.files.item(0);
@@ -29,7 +28,7 @@ export class FileUploadComponent implements OnInit {
         next: (event: any) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
-            this.fileInfos = this.fileUploadService.getFiles();
+            this.router.navigate(['/list_files']);
           }
         },
         error: (err: any) => {
@@ -48,7 +47,8 @@ export class FileUploadComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.fileInfos = this.fileUploadService.getFiles();
+  goToListFilesPage(): void
+  {
+    this.router.navigate(['/list_files']);
   }
 }
