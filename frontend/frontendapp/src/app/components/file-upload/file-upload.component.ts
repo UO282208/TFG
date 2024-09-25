@@ -24,6 +24,7 @@ export class FileUploadComponent {
 
   upload(): void {
     if (this.currentFile) {
+      this.message = 'File is being processed, please wait around 20 seconds before being redirected'
       this.fileUploadService.uploadFile(this.currentFile).subscribe({
         next: (event: any) => {
           if (event instanceof HttpResponse) {
