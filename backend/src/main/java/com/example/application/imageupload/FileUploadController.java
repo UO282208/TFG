@@ -22,7 +22,7 @@ import com.example.application.imageupload.storage.StorageFileNotFoundException;
 import com.example.application.imageupload.storage.StorageService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/files")
 public class FileUploadController{
 
 	private final StorageService storageService;

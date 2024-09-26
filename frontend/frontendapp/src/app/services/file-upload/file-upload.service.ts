@@ -13,7 +13,7 @@ export class FileUploadService {
   uploadFile(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);
-    const req = new HttpRequest('POST', `${this.apiBaseUrl}/api/uploadFile`, formData, {
+    const req = new HttpRequest('POST', `${this.apiBaseUrl}/api/files/uploadFile`, formData, {
       responseType: 'text',
     });
 

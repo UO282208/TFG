@@ -11,6 +11,6 @@ export class ListFilesService {
   constructor(private http: HttpClient) { }
 
   getFiles(): Observable<any> {
-    return this.http.get(`${this.apiBaseUrl}/api/allFiles`);
+    return this.http.get(`${this.apiBaseUrl}/api/files/allFiles`);
   }
 }
