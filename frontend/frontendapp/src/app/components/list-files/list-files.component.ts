@@ -18,7 +18,7 @@ export class ListFilesComponent implements OnInit{
   constructor(private listFilesService: ListFilesService, private router: Router) { }
 
   goToFileUploadPage(): void{
-    this.router.navigate(['']);
+    this.router.navigate(['/upload_files']);
   }
 
   ngOnInit(): void {

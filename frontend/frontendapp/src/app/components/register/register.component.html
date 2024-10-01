@@ -1,0 +1,29 @@
+<div>
+    <h3>Register</h3>
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+        <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+    </div>
+    <div>
+        <label for ="name" class="form-label">Name</label>
+        <input [(ngModel)]="registerRequest.name" type="name" class="form-control" id="login" placeholder="John Doe">
+    </div>
+    <div>
+        <label for ="login" class="form-label">Email Address</label>
+        <input [(ngModel)]="registerRequest.email" type="email" class="form-control" id="login" placeholder="name@domain.com">
+    </div>
+    <div>
+        <label for ="password" class="form-label">Password</label>
+        <input [(ngModel)]="registerRequest.password" type="password" class="form-control" id="login" placeholder="*****">
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary" (click)="register()">
+            Register
+        </button>
+        <div>
+            Already have an account?
+            <button type="button" class="btn btn-link" (click)="login()">
+                Login
+            </button>
+        </div>
+    </div>
+</div>

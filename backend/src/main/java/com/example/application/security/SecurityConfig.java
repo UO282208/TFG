@@ -27,7 +27,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
             req -> req.requestMatchers(
-                "/api/auth/**").permitAll().anyRequest().authenticated()).sessionManagement(
+                "/api/auth/**",
+                "/api/files/**").permitAll().anyRequest().authenticated()).sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authenticationProvider)
