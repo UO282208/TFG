@@ -13,6 +13,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.application.imageupload.storage.StorageProperties;
 import com.example.application.imageupload.storage.StorageService;
+import com.example.application.role.Role;
+import com.example.application.role.RoleRepository;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
@@ -23,9 +25,12 @@ public class Application {
 	}
 
 	@Bean
-	CommandLineRunner init(StorageService storageService) {
+	CommandLineRunner init(StorageService storageService, RoleRepository roleRepository) {
 		return (args) -> {
 			storageService.init();
+			if(roleRepository.findByName("USER").isEmpty()){
+				roleRepository.save(Role.builder().name("USER").build());
+			}
 		};
 	}
 
