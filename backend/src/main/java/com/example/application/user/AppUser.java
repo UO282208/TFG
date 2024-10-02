@@ -118,6 +118,10 @@ public class AppUser implements UserDetails, Principal{
         this.email = email;
     }
 
+    public List<ConstructionSite> getAllConstructionSites() {
+        return this.constructionSites;
+    }
+
     public void addConstructionSite(ConstructionSite cs) {
         this.constructionSites.add(cs);
         if (cs.getOwner() != this) {

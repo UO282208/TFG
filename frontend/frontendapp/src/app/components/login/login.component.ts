@@ -26,7 +26,7 @@ export class LoginComponent {
     this.loginService.login(this.authRequest).subscribe({
       next: (response) => {
         this.tokenService.token = response.token as string;
-        this.router.navigate(['/list_files']);
+        this.router.navigate(['/all-cs']);
       },
       error: (error) => {
         console.log('Login failed', error);

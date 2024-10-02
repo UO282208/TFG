@@ -28,7 +28,8 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
             req -> req.requestMatchers(
                 "/api/auth/**",
-                "/api/files/**").permitAll().anyRequest().authenticated()).sessionManagement(
+                "/api/files/**",
+                "/api/constructionSite/**").permitAll().anyRequest().authenticated()).sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authenticationProvider)

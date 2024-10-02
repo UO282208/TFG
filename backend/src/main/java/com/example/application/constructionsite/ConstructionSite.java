@@ -1,6 +1,7 @@
 package com.example.application.constructionsite;
 
 import com.example.application.user.AppUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,9 +12,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ConstructionSite {
 
     @Id
@@ -33,6 +41,7 @@ public class ConstructionSite {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="OWNER_ID")
+    @ToString.Exclude
     private AppUser owner;
 
     public Long getId()
@@ -50,6 +59,7 @@ public class ConstructionSite {
         return this.numOfWorkers;
     }
 
+    @JsonIgnore
     public AppUser getOwner()
     {
         return this.owner;

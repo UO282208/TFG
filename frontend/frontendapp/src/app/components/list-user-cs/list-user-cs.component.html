@@ -1,0 +1,23 @@
+<div>
+  <button type="button" class="btn btn-primary" (click)="add()">
+      Add Construction Site
+  </button>
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let site of constructionSites">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Construction Site: {{ site.name }}</h5>
+          <p class="card-text">
+            <strong>ID:</strong> {{ site.id }}<br>
+            <strong>Number of Workers:</strong> {{ site.numOfWorkers }}
+          </p>
+          <button type="button" class="btn btn-primary" (click)="delete(site.id)">
+                  Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

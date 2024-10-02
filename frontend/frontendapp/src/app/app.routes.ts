@@ -5,6 +5,8 @@ import { ListFilesComponent } from './components/list-files/list-files.component
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ListUserCsComponent } from './components/list-user-cs/list-user-cs.component';
+import { AddCsComponent } from './components/add-cs/add-cs.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +20,12 @@ export const routes: Routes = [
     },
     {
         path: 'register', component: RegisterComponent
+    },
+    {
+        path: 'all-cs', component: ListUserCsComponent
+    },
+    {
+        path: 'add-cs', component: AddCsComponent
     },
     ];
 
