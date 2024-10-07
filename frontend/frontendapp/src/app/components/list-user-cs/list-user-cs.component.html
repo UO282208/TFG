@@ -13,7 +13,10 @@
             <strong>ID:</strong> {{ site.id }}<br>
             <strong>Number of Workers:</strong> {{ site.numOfWorkers }}
           </p>
-          <button type="button" class="btn btn-primary" (click)="delete(site.id)">
+          <button type="button" class="btn btn-primary" (click)="viewDetails(site.id)">
+            View Details/Upload
+          </button>
+          <button type="button" class="btn btn-danger" (click)="delete(site.id)">
                   Delete
           </button>
         </div>

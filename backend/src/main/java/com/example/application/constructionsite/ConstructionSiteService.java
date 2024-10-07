@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.application.constructionsitedetails.ConstructionSiteDetails;
+import com.example.application.constructionsitedetails.ConstructionSiteDetailsRepository;
 import com.example.application.security.JwtService;
 import com.example.application.user.AppUserRepository;
 
@@ -16,6 +18,7 @@ public class ConstructionSiteService {
     private final JwtService jwtService;
     private final ConstructionSiteRepository constructionSiteRepository;
     private final AppUserRepository appUserRepository;
+    private final ConstructionSiteDetailsRepository constructionSiteDetailsRepository;
 
     public List<ConstructionSite> getConstructionSites(String username){
         var user = appUserRepository.findByEmail(username).
@@ -29,10 +32,13 @@ public class ConstructionSiteService {
         var site = ConstructionSite.builder().name(newConstructionSiteRequest.getName())
                                             .numOfWorkers(newConstructionSiteRequest.getNumOfWorkers())
                                             .owner(user).build();
+        var details = ConstructionSiteDetails.builder().build();
         user.addConstructionSite(site);
+        site.setDetails(details);
 
         this.constructionSiteRepository.save(site);
         this.appUserRepository.save(user);
+        this.constructionSiteDetailsRepository.save(details);
     }
 
     public void deleteConstructionSite(Long id){
@@ -40,7 +46,15 @@ public class ConstructionSiteService {
         var user = appUserRepository.findByEmail(site.getOwner().getEmail())
         .orElseThrow(() -> new IllegalStateException("User not found"));
         site.setOwner(null);
+        var details = site.getDetails();
         user.removeConstructionSite(site);
         constructionSiteRepository.delete(site);
+        constructionSiteDetailsRepository.delete(details);
+    }
+
+    public ConstructionSiteDetails getConstructionSiteDetailsById(Long id) {
+        var site = constructionSiteRepository.getReferenceById(id);
+        var details = site.getDetails();
+        return details;
     }
 }

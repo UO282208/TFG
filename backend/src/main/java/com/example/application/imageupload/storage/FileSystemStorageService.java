@@ -7,8 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
+import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,16 +19,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.application.constructionsite.ConstructionSiteRepository;
+import com.example.application.constructionsitedetails.ConstructionSiteDetailsRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class FileSystemStorageService implements StorageService {
+
+	public enum Elements {
+		TRANSFORMERS(0),
+		EXPANSION_TANK(1), 
+		RADIATOR(2),
+		CONNECTION_POINT(3),
+		FIREWALL(4);
+		private final int index;
+	
+		Elements(int index) {
+			this.index = index;
+		}
+	
+		public int getIndex() {
+			return this.index;
+		}
+	}
 
 	private final Path rootLocation;
 	private final Path resultsLocation;
 	private final static String FILE_RESPONSE_LOCATION = "http://localhost:8080/api/";
 	private final static String AI_PREDICTING_FILE_LOCATION = "c:/Users/Usuario/Documents/TFG/backend/src/main/yolov8/predictimg.py";
+	private final ConstructionSiteRepository constructionSiteRepository;
+	private final ConstructionSiteDetailsRepository constructionSiteDetailsRepository;
 
 	@Autowired
-	public FileSystemStorageService(StorageProperties properties) {
+	public FileSystemStorageService(StorageProperties properties, ConstructionSiteRepository constructionSiteRepository, 
+	ConstructionSiteDetailsRepository constructionSiteDetailsRepository) {
         
         if(properties.getLocation().trim().length() == 0){
             throw new StorageException("File upload location can not be Empty."); 
@@ -34,6 +63,8 @@ public class FileSystemStorageService implements StorageService {
 
 		this.rootLocation = Paths.get(properties.getLocation());
 		this.resultsLocation = Paths.get(properties.getResultsLocation());
+		this.constructionSiteRepository = constructionSiteRepository;
+		this.constructionSiteDetailsRepository = constructionSiteDetailsRepository;
 	}
 
 	@Override
@@ -124,16 +155,40 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void processFile(String filename) {
+	public void processFile(String filename, String csId) {
+		var details = constructionSiteRepository.getReferenceById(Long.parseLong(csId)).getDetails();
+		details.setLastDayUploaded(LocalDateTime.now());
 		ProcessBuilder processBuilder = new ProcessBuilder("python", AI_PREDICTING_FILE_LOCATION, filename);
 		processBuilder.redirectErrorStream(true);
 
 		Process process;
 		try {
-			process = processBuilder.start();
+			process = processBuilder.start();		
 			process.waitFor();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		int[] objectCounts = readObjectCounts(filename);
+		details.setNumberOfTransformers(details.getNumberOfTransformers() + objectCounts[Elements.TRANSFORMERS.index]);
+		details.setNumberOfExpansionTanks(details.getNumberOfExpansionTanks() + objectCounts[Elements.EXPANSION_TANK.index]);
+		details.setNumberOfRadiators(details.getNumberOfRadiators() + objectCounts[Elements.RADIATOR.index]);
+		details.setNumberOfConnectionPoints(details.getNumberOfConnectionPoints() + objectCounts[Elements.CONNECTION_POINT.index]);
+		details.setNumberOfFirewalls(details.getNumberOfFirewalls() + objectCounts[Elements.FIREWALL.index]);
+
+		this.constructionSiteDetailsRepository.save(details);
+	}
+
+	private int[] readObjectCounts(String filename){
+		String jsonFilePath = "C:/Users/Usuario/Documents/TFG/backend/storefiles/results/ObjectCounts_" + filename + ".json";
+		ObjectMapper objectMapper = new ObjectMapper();
+		int[] objectCounts = new int[Elements.values().length];
+
+		try {	
+			objectCounts = objectMapper.readValue(new File(jsonFilePath), int[].class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return objectCounts;
 	}
 }

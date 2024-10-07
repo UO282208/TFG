@@ -48,4 +48,8 @@ export class ListUserCsComponent implements OnInit {
       });
     this.fetchConstructionSites();
   }
+
+  viewDetails(csId: number){
+    this.router.navigate(['/details', csId]);
+  }
 }

@@ -1,17 +1,14 @@
-package com.example.application.constructionsite;
+package com.example.application.constructionsitedetails;
 
-import com.example.application.constructionsitedetails.ConstructionSiteDetails;
-import com.example.application.user.AppUser;
+import java.time.LocalDateTime;
+
+import com.example.application.constructionsite.ConstructionSite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -28,8 +25,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConstructionSite {
-
+public class ConstructionSiteDetails {
+    
     @Id
     @SequenceGenerator(
         name = "constructionsite_id_sequence",
@@ -42,16 +39,14 @@ public class ConstructionSite {
     )
     private long id;
 
-    private String name;
-    private int numOfWorkers;
+    private long numberOfTransformers;
+    private long numberOfExpansionTanks;
+    private long numberOfRadiators;
+    private long numberOfConnectionPoints;
+    private long numberOfFirewalls;
+    private LocalDateTime lastDayUploaded;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="OWNER_ID")
+    @OneToOne(mappedBy = "details")
     @JsonIgnore
-    private AppUser owner;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "details_id", referencedColumnName = "id")
-    @JsonIgnore
-    private ConstructionSiteDetails details;
+    private ConstructionSite constructionSite;
 }

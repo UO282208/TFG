@@ -20,8 +20,8 @@ export class ListUserCsService {
   }
 
   deleteConstructionSite(csId: number): Observable<any> {
-    console.log(csId);
     const params = new HttpParams().set('id', csId);
     return this.http.delete(`${this.apiBaseUrl}/api/constructionSite/deleteConstructionSite`, { params });
   }
+
 }

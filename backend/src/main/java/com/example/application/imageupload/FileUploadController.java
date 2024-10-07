@@ -60,10 +60,10 @@ public class FileUploadController{
 	}
 
 	@PostMapping("/uploadFile")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("csId") String csId) {
 
 		storageService.store(file);
-		storageService.processFile(file.getOriginalFilename());
+		storageService.processFile(file.getOriginalFilename(), csId);
 
 		return ResponseEntity.ok("File uploaded successfully");
 	}
