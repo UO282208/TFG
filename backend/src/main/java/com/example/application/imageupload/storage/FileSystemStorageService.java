@@ -49,7 +49,7 @@ public class FileSystemStorageService implements StorageService {
 	private final Path rootLocation;
 	private final Path resultsLocation;
 	private final static String FILE_RESPONSE_LOCATION = "http://localhost:8080/api/";
-	private final static String AI_PREDICTING_FILE_LOCATION = "c:/Users/Usuario/Documents/TFG/backend/src/main/yolov8/predictimg.py";
+	private final static Path AI_PREDICTING_FILE_LOCATION = Path.of("src", "main", "yolov8", "predictimg.py");
 	private final ConstructionSiteRepository constructionSiteRepository;
 	private final ConstructionSiteDetailsRepository constructionSiteDetailsRepository;
 
@@ -73,6 +73,7 @@ public class FileSystemStorageService implements StorageService {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file.");
 			}
+
 			Path destinationFile = this.rootLocation.resolve(
 					Paths.get(file.getOriginalFilename()))
 					.normalize().toAbsolutePath();
@@ -158,11 +159,13 @@ public class FileSystemStorageService implements StorageService {
 	public void processFile(String filename, String csId) {
 		var details = constructionSiteRepository.getReferenceById(Long.parseLong(csId)).getDetails();
 		details.setLastDayUploaded(LocalDateTime.now());
-		ProcessBuilder processBuilder = new ProcessBuilder("python", AI_PREDICTING_FILE_LOCATION, filename);
+		System.out.println(AI_PREDICTING_FILE_LOCATION.toAbsolutePath().toString());
+		ProcessBuilder processBuilder = new ProcessBuilder("python", AI_PREDICTING_FILE_LOCATION.toAbsolutePath().toString(), filename);
 		processBuilder.redirectErrorStream(true);
 
 		Process process;
 		try {
+			System.out.println("Workin");
 			process = processBuilder.start();		
 			process.waitFor();
 		} catch (Exception e) {
@@ -180,7 +183,7 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	private int[] readObjectCounts(String filename){
-		String jsonFilePath = "C:/Users/Usuario/Documents/TFG/backend/storefiles/results/ObjectCounts_" + filename + ".json";
+		String jsonFilePath = "storefiles/results/ObjectCounts_" + filename + ".json";
 		ObjectMapper objectMapper = new ObjectMapper();
 		int[] objectCounts = new int[Elements.values().length];
 

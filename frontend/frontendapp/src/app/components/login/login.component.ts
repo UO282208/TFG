@@ -29,8 +29,12 @@ export class LoginComponent {
         this.router.navigate(['/all-cs']);
       },
       error: (error) => {
-        console.log('Login failed', error);
-        this.errorMsg = error.error;
+        if (error.error.validationErrors){
+          this.errorMsg = error.error.validationErrors;
+        } else {
+          this.errorMsg.push(error.error.error);
+        }
+        
       }});
   }
 

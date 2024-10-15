@@ -1,4 +1,5 @@
 import json
+import os
 from PIL import Image
 
 from ultralytics import YOLO
@@ -9,9 +10,15 @@ filename = sys.argv[1]
 
 object_classes = ['Transformador Elevador Subestación', 'Tanque de Expansión', 'Radiador', 'Punto de Conexión', 'Muro Cortafuegos']
 
-model = YOLO("C:/Users/Usuario/Documents/TFG/runs/detect/mymodel5/weights/best.pt")
+try:
+    model = YOLO(os.path.join(os.path.dirname(__file__), 'best.pt'))
+except Exception as e:
+    print(f"An error occurred while loading the model: {e}")
 
-results = model("C:/Users/Usuario/Documents/TFG/backend/storefiles/" + filename)
+try:
+    results = model(os.path.join(os.path.dirname(__file__), "../../../storefiles", filename))
+except Exception as e:
+    print(f"An error occurred while loading the file: {e}")
 
 object_counts = {class_name: 0 for class_name in object_classes}
 
@@ -21,7 +28,8 @@ for i, r in enumerate(results):
 
     (r.show())
 
-    r.save(filename=f"C:/Users/Usuario/Documents/TFG/backend/storefiles/results/Processed" + filename)
+
+    r.save(os.path.join(os.path.join(os.path.dirname(__file__), "../../../storefiles/results/"), f"Processed{filename}"))
 
     for box in r.boxes:
         cls_id = box.cls.item() 
@@ -32,6 +40,6 @@ for i, r in enumerate(results):
 
 object_counts_array = [object_counts[class_name] for class_name in object_classes]
 
-output_filename = f"C:/Users/Usuario/Documents/TFG/backend/storefiles/results/ObjectCounts_{filename}.json"
+output_filename = os.path.join(os.path.join(os.path.dirname(__file__), "../../../storefiles/results/"), f"ObjectCounts_{filename}.json")
 with open(output_filename, 'w') as outfile:
     json.dump(object_counts_array, outfile)

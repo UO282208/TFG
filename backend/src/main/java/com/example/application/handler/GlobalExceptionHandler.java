@@ -7,12 +7,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-    
+@ControllerAdvice
+public class GlobalExceptionHandler{
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleException(Exception exp){
+        exp.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+            ExceptionResponse.builder()
+            .bussinessErrorDescription("Internal error, contact developers")
+            .error(exp.getMessage())
+            .build()
+        );
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exp){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
@@ -34,17 +45,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ExceptionResponse.builder()
             .validationErrors(errors)
-            .build()
-        );
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception exp){
-        exp.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-            ExceptionResponse.builder()
-            .bussinessErrorDescription("Internal error, contact developers")
-            .error(exp.getMessage())
             .build()
         );
     }

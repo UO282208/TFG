@@ -30,6 +30,7 @@ public class FileUploadController{
 	@Autowired
 	public FileUploadController(StorageService storageService) {
 		this.storageService = storageService;
+		storageService.init();
 	}
 
 	@GetMapping("/allFiles")
@@ -40,8 +41,6 @@ public class FileUploadController{
             path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
                     "serveFile", path.getFileName().toString()).build().toUri().toString())
             .collect(Collectors.toList());
-		
-		//files = storageService.trim(files);
 		
         return ResponseEntity.ok(files);
 	}
