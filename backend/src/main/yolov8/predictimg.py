@@ -9,7 +9,7 @@ filename = sys.argv[1]
 
 object_classes = ['Transformador Elevador Subestación', 'Tanque de Expansión', 'Radiador', 'Punto de Conexión', 'Muro Cortafuegos']
 
-model = YOLO("C:/Users/Usuario/Documents/TFG/runs/detect/mymodel/weights/best.pt")
+model = YOLO("C:/Users/Usuario/Documents/TFG/runs/detect/mymodel5/weights/best.pt")
 
 results = model("C:/Users/Usuario/Documents/TFG/backend/storefiles/" + filename)
 
