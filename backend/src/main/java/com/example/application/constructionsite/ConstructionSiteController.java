@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.application.constructionsitedetails.ConstructionSiteDetails;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -39,7 +40,7 @@ public class ConstructionSiteController {
 
     @PostMapping("/addConstructionSite")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<?> addConstructionSite(@RequestBody NewConstructionSiteRequest newConstructionSiteRequest){
+    public ResponseEntity<?> addConstructionSite(@RequestBody @Valid NewConstructionSiteRequest newConstructionSiteRequest){
         this.constructionSiteService.addConstructionSite(newConstructionSiteRequest);
         return ResponseEntity.accepted().build();
     }
