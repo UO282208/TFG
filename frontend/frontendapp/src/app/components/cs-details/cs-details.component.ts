@@ -26,7 +26,7 @@ export class CsDetailsComponent implements OnInit{
   
   csId: number = 0
 
-  currentFile?: File;
+  currentFile?: File | null;
   message = '';
   todayUploaded = false;
 
@@ -59,7 +59,18 @@ export class CsDetailsComponent implements OnInit{
   }
 
   selectFile(event: any): void {
-    this.currentFile = event.target.files.item(0);
+    const file = event.target.files.item(0);
+
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (file && allowedMimeTypes.includes(file.type)) {
+      this.currentFile = file;
+      console.log('File selected:', this.currentFile);
+    } else {
+      this.currentFile = null;
+      alert('Invalid file type. Please select an image (JPG, PNG, WEBP).');
+      console.error('Invalid file type selected:', file?.type);
+    }
   }
 
   upload(): void {
