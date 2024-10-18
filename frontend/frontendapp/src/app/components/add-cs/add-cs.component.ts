@@ -29,8 +29,7 @@ export class AddCsComponent {
         this.router.navigate(['/all-cs']);
       },
       error: (error) => {
-        console.log('Construction site creation failed', error);
-        this.errorMsg = error.error;
+        this.errorMsg = error.error.validationErrors;
       }});
     }
 }
