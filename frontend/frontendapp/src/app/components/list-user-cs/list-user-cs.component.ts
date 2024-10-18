@@ -39,14 +39,18 @@ export class ListUserCsComponent implements OnInit {
   }
 
   delete(csId: number){
-    this.listUserCsService.deleteConstructionSite(csId).subscribe(
-      response => {
-        console.log('Delete successful', response);
-      },
-      error => {
-        console.error('Delete failed', error);
-      });
-    this.fetchConstructionSites();
+    const confirmed = confirm('Are you sure you want to delete this construction site?');
+
+    if (confirmed) {
+      this.listUserCsService.deleteConstructionSite(csId).subscribe(
+        response => {
+          console.log('Delete successful', response);
+          window.location.reload();
+        },
+        error => {
+          console.error('Delete failed', error);
+        });
+    }
   }
 
   viewDetails(csId: number){
