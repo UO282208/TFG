@@ -1,6 +1,16 @@
 <div class="container">
-  <div>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
     <h3>IA para la detección de objetos en una obra</h3>
+    <div>
+      <ng-container *ngIf="tokenService.isLoggedIn; else noAuth">
+        <span>Bienvenido, {{ tokenService.userName }}</span>
+        <a href="#" (click)="logout()" style="margin-left: 15px;">Cerrar sesión</a>
+      </ng-container>
+      <ng-template #noAuth>
+        <a href="/login" style="margin-right: 15px;">Iniciar sesión</a>
+        <a href="/register">Registrarse</a>
+      </ng-template>
+    </div>
   </div>
 </div>
 

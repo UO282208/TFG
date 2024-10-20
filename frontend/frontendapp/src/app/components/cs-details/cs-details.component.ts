@@ -5,6 +5,7 @@ import { CsDetailsService } from '../../services/cs-details/cs-details.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetCsDetailsRequest } from '../../models/GetCsDetailsRequest';
 import { HttpResponse } from '@angular/common/http';
+import { TokenService } from '../../services/token/token.service';
 
 @Component({
   selector: 'app-cs-details',
@@ -30,7 +31,7 @@ export class CsDetailsComponent implements OnInit{
   message = '';
   todayUploaded = false;
 
-  constructor(private csDetailsService: CsDetailsService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private csDetailsService: CsDetailsService, private router: Router, private route: ActivatedRoute, private tokenService: TokenService) { }
 
   hasNotUploadedToday(): boolean{
     if (this.csDetails.lastDayUploaded != undefined)
@@ -41,6 +42,9 @@ export class CsDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    if (!this.tokenService.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
     this.todayUploaded = !this.hasNotUploadedToday();
     this.getDetails();
   } 

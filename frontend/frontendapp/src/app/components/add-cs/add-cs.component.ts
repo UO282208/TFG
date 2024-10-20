@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NewConstructionSiteRequest } from '../../models/NewConstructionSiteRequest';
 import { AddCsService } from '../../services/add-cs/add-cs.service';
@@ -13,12 +13,18 @@ import { TokenService } from '../../services/token/token.service';
   templateUrl: './add-cs.component.html',
   styleUrl: './add-cs.component.css'
 })
-export class AddCsComponent {
+export class AddCsComponent implements OnInit {
 
   errorMsg: Array<String> = [];
   newConstructionSiteRequest: NewConstructionSiteRequest = {token: '', name: '', numOfWorkers: 0};
 
   constructor (private addCsService: AddCsService, private router: Router, private tokenService: TokenService ) { }
+  
+  ngOnInit(): void {
+    if (!this.tokenService.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
+  }
 
   add(): void {
     this.errorMsg = [];

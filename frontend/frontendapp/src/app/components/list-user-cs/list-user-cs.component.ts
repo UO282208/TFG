@@ -19,6 +19,9 @@ export class ListUserCsComponent implements OnInit {
   constructor(private listUserCsService: ListUserCsService, private router: Router, private tokenService: TokenService) { }
 
   ngOnInit(): void {
+    if (!this.tokenService.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
     this.fetchConstructionSites();
   }
 
