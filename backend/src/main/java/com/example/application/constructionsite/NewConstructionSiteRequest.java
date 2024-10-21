@@ -20,7 +20,7 @@ public class NewConstructionSiteRequest {
     @NotBlank(message = "Name must not be empty")
     private String name;
 
-    @Min(value = 1, message = "From must be greater than zero")
+    @Min(value = 1, message = "Workers must be greater than zero")
     private int numOfWorkers;
     
 }

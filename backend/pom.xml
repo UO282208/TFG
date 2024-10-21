@@ -96,7 +96,13 @@
 			<optional>true</optional>
 		</dependency>
 
-	</dependencies>
+	
+   <dependency>
+     <groupId>org.apache.camel</groupId>
+     <artifactId>camel-core</artifactId>
+     <version>3.0.0-M4</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>

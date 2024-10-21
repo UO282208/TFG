@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.application.constructionsitedetails.ConstructionSiteDetails;
 import com.example.application.constructionsitedetails.ConstructionSiteDetailsRepository;
+import com.example.application.restriction.Restriction;
+import com.example.application.restriction.RestrictionRepository;
 import com.example.application.security.JwtService;
 import com.example.application.user.AppUserRepository;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,6 +22,7 @@ public class ConstructionSiteService {
     private final ConstructionSiteRepository constructionSiteRepository;
     private final AppUserRepository appUserRepository;
     private final ConstructionSiteDetailsRepository constructionSiteDetailsRepository;
+    private final RestrictionRepository restrictionRepository;
 
     public List<ConstructionSite> getConstructionSites(String username){
         var user = appUserRepository.findByEmail(username).
@@ -56,5 +60,22 @@ public class ConstructionSiteService {
         var site = constructionSiteRepository.getReferenceById(id);
         var details = site.getDetails();
         return details;
+    }
+
+    public void addRestriction(Long id, @Valid NewRestrictionRequest newRestrictionRequest) {
+        var cs = constructionSiteRepository.getReferenceById(id);
+        var details = constructionSiteDetailsRepository.getReferenceById(cs.getDetails().getId());
+        var res = Restriction.builder().transformers(newRestrictionRequest.getTransformers())
+                                       .expansionTanks(newRestrictionRequest.getExpansionTanks())
+                                       .radiators(newRestrictionRequest.getRadiators())
+                                       .connectionPoints(newRestrictionRequest.getConnectionPoints())
+                                       .firewalls(newRestrictionRequest.getFirewalls())
+                                       .startDate(newRestrictionRequest.getStartDate())
+                                       .endDate(newRestrictionRequest.getEndDate())
+                                       .shouldAppear(newRestrictionRequest.isShouldAppear())
+                                       .site(details).build();
+        details.addRestriction(res);
+        constructionSiteDetailsRepository.save(details);
+        restrictionRepository.save(res);
     }
 }

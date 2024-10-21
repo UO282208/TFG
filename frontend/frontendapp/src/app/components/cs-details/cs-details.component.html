@@ -1,5 +1,11 @@
 <div class="cs-details">
     <h2>CS Details</h2>
+    <div class="alert alert-warning" role="alert" *ngIf="csDetails.restrictionsViolated.length">
+      <p *ngFor="let msg of csDetails.restrictionsViolated">{{ msg }}</p>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addRestriction()">
+      Add Restriction
+    </button>
     <table>
       <thead>
         <tr>
@@ -44,7 +50,7 @@
   </div>
 
   <div class="col-4">
-    <button class="btn btn-success btn-sm" [disabled]="!currentFile && !todayUploaded" (click)="upload()">
+    <button class="btn btn-success btn-sm" [disabled]="hasUploadedToday() || !currentFile" (click)="upload()">
       Upload
     </button>
   </div>

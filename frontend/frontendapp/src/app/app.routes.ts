@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ListUserCsComponent } from './components/list-user-cs/list-user-cs.component';
 import { AddCsComponent } from './components/add-cs/add-cs.component';
 import { CsDetailsComponent } from './components/cs-details/cs-details.component';
+import { AddRestrictionComponent } from './components/add-restriction/add-restriction.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,9 @@ export const routes: Routes = [
     },
     {
         path: 'details/:csId', component: CsDetailsComponent
+    },
+    {
+        path: 'details/:csId/addRestriction', component: AddRestrictionComponent
     },
     ];
 

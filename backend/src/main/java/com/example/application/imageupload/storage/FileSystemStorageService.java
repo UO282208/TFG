@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 import java.io.File;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.application.constructionsite.ConstructionSiteRepository;
 import com.example.application.constructionsitedetails.ConstructionSiteDetailsRepository;
+import com.example.application.restriction.Restriction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -156,7 +158,7 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void processFile(String filename, String csId) {
+	public List<String> processFile(String filename, String csId) {
 		var details = constructionSiteRepository.getReferenceById(Long.parseLong(csId)).getDetails();
 		details.setLastDayUploaded(LocalDateTime.now());
 		System.out.println(AI_PREDICTING_FILE_LOCATION.toAbsolutePath().toString());
@@ -173,6 +175,62 @@ public class FileSystemStorageService implements StorageService {
 		}
 
 		int[] objectCounts = readObjectCounts(filename);
+		List<String> collectedErrors = new ArrayList<>();
+
+		for (Restriction r : details.getAllRestrictions()) {
+			if (new Date().before(Date.from(r.getEndDate().atZone(ZoneId.systemDefault()).toInstant()))){
+				if (new Date().after(Date.from(r.getStartDate().atZone(ZoneId.systemDefault()).toInstant()))) {
+					if (r.isShouldAppear())
+					{
+						if (objectCounts[Elements.TRANSFORMERS.index] < r.getTransformers())
+						{
+							collectedErrors.add("Transformers count is less than required (" + r.getTransformers() + ").");
+						}
+						if (objectCounts[Elements.EXPANSION_TANK.index] < r.getExpansionTanks()) 
+						{
+							collectedErrors.add("Expansion tanks count is less than required (" + r.getExpansionTanks() + ").");
+						}
+						if (objectCounts[Elements.RADIATOR.index] < r.getRadiators()) 
+						{
+							collectedErrors.add("Radiators count is less than required (" + r.getRadiators() + ").");
+						}
+						if (objectCounts[Elements.CONNECTION_POINT.index] < r.getConnectionPoints()) 
+						{
+							collectedErrors.add("Connection points count is less than required (" + r.getConnectionPoints() + ").");
+						}
+						if (objectCounts[Elements.FIREWALL.index] < r.getFirewalls()) 
+						{
+							collectedErrors.add("Firewalls count is less than required (" + r.getFirewalls() + ").");
+						}
+					}
+					else{
+						if (objectCounts[Elements.TRANSFORMERS.index] > r.getTransformers())
+						{
+							collectedErrors.add("Transformers count is more than required (" + r.getTransformers() + ").");
+						}
+						if (objectCounts[Elements.EXPANSION_TANK.index] > r.getExpansionTanks()) 
+						{
+							collectedErrors.add("Expansion tanks count is more than required (" + r.getExpansionTanks() + ").");
+						}
+						if (objectCounts[Elements.RADIATOR.index] > r.getRadiators()) 
+						{
+							collectedErrors.add("Radiators count is more than required (" + r.getRadiators() + ").");
+						}
+						if (objectCounts[Elements.CONNECTION_POINT.index] > r.getConnectionPoints()) 
+						{
+							collectedErrors.add("Connection points count is more than required (" + r.getConnectionPoints() + ").");
+						}
+						if (objectCounts[Elements.FIREWALL.index] > r.getFirewalls()) 
+						{
+							collectedErrors.add("Firewalls count is more than required (" + r.getFirewalls() + ").");
+						}
+					}
+				}
+			}
+        }
+
+		details.setRestrictionsViolated(collectedErrors);
+
 		details.setNumberOfTransformers(details.getNumberOfTransformers() + objectCounts[Elements.TRANSFORMERS.index]);
 		details.setNumberOfExpansionTanks(details.getNumberOfExpansionTanks() + objectCounts[Elements.EXPANSION_TANK.index]);
 		details.setNumberOfRadiators(details.getNumberOfRadiators() + objectCounts[Elements.RADIATOR.index]);
@@ -180,6 +238,7 @@ public class FileSystemStorageService implements StorageService {
 		details.setNumberOfFirewalls(details.getNumberOfFirewalls() + objectCounts[Elements.FIREWALL.index]);
 
 		this.constructionSiteDetailsRepository.save(details);
+		return collectedErrors;
 	}
 
 	private int[] readObjectCounts(String filename){

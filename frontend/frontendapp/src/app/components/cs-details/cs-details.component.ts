@@ -22,35 +22,41 @@ export class CsDetailsComponent implements OnInit{
     numberOfRadiators: 0,
     numberOfConnectionPoints: 0,
     numberOfFirewalls: 0,
-    lastDayUploaded: undefined
+    lastDayUploaded: undefined,
+    restrictionsViolated: []
   }
   
   csId: number = 0
 
   currentFile?: File | null;
   message = '';
-  todayUploaded = false;
 
   constructor(private csDetailsService: CsDetailsService, private router: Router, private route: ActivatedRoute, private tokenService: TokenService) { }
 
-  hasNotUploadedToday(): boolean{
-    if (this.csDetails.lastDayUploaded != undefined)
-      return this.csDetails.lastDayUploaded.getDay < new Date().getDay && 
-        this.csDetails.lastDayUploaded.getMonth <= new Date().getMonth &&
-        this.csDetails.lastDayUploaded.getFullYear <= new Date().getFullYear;
-    return true;
+  hasUploadedToday(): boolean{
+    if (this.csDetails.lastDayUploaded) {
+      const lastUploadedDate = new Date(this.csDetails.lastDayUploaded);
+      const today = new Date();
+
+      return (
+          lastUploadedDate.getFullYear() === today.getFullYear() &&
+          lastUploadedDate.getMonth() === today.getMonth() &&
+          lastUploadedDate.getDate() === today.getDate()
+      );
+    }
+    return false;
   }
 
   ngOnInit(): void {
     if (!this.tokenService.isLoggedIn) {
       this.router.navigate(['/login']);
     }
-    this.todayUploaded = !this.hasNotUploadedToday();
+    this.currentFile = undefined;
+    this.route.paramMap.subscribe(params => { this.csId = Number(params.get('csId'))});
     this.getDetails();
   } 
 
   getDetails(): void {
-    this.route.paramMap.subscribe(params => { this.csId = Number(params.get('csId'))});
     this.csDetailsService.getConstructionSiteDetails(this.csId).subscribe(
       (data) => {
         this.csDetails = data;
@@ -84,12 +90,10 @@ export class CsDetailsComponent implements OnInit{
         next: (event: any) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
-            this.todayUploaded = true;
           }
         },
         error: (err: any) => {
           console.log(err);
-
           if (err.error && err.error.message) {
             this.message = err.error.message;
           } else {
@@ -97,11 +101,14 @@ export class CsDetailsComponent implements OnInit{
           }
         },
         complete: () => {
-          this.currentFile = undefined;
+          this.currentFile = null;
           this.getDetails();
-          this.todayUploaded = !this.hasNotUploadedToday();
         },
       });
     }
+  }
+
+  addRestriction() {
+    this.router.navigate(['details', this.csId, 'addRestriction']);
   }
 }

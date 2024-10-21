@@ -4,5 +4,6 @@ export interface GetCsDetailsRequest {
     numberOfRadiators: number,
     numberOfConnectionPoints: number,
     numberOfFirewalls: number,
-    lastDayUploaded?: Date
+    lastDayUploaded?: Date,
+    restrictionsViolated: Array<String>
 }

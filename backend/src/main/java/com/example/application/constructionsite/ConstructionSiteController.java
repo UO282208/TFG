@@ -57,4 +57,11 @@ public class ConstructionSiteController {
         ConstructionSiteDetails details = this.constructionSiteService.getConstructionSiteDetailsById(id);
         return ResponseEntity.ok(details);
     }
+
+    @PostMapping("details/{id}/addRestriction")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<?> addRestriction(@PathVariable Long id, @RequestBody @Valid NewRestrictionRequest newRestrictionRequest) {
+        this.constructionSiteService.addRestriction(id, newRestrictionRequest);
+        return ResponseEntity.accepted().build();
+    }
 }
