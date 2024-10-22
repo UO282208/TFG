@@ -48,7 +48,7 @@ export class ListUserCsComponent implements OnInit {
       this.listUserCsService.deleteConstructionSite(csId).subscribe(
         response => {
           console.log('Delete successful', response);
-          window.location.reload();
+          this.fetchConstructionSites();
         },
         error => {
           console.error('Delete failed', error);
