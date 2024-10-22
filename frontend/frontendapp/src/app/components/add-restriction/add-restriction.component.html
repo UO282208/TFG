@@ -1,4 +1,5 @@
 <h3>Add Restriction</h3>
+<hr>
 <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
     <p *ngFor="let msg of errorMsg">{{ msg }}</p>
 </div>
@@ -47,7 +48,7 @@
         </select>
     </div>
   
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-success">Submit</button>
     <button type="button" class="btn btn-danger" (click)="cancel()">
         Cancel
     </button>

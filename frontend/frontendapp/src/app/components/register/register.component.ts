@@ -26,11 +26,22 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (error) => {
-        this.errorMsg = error.error.validationErrors;
+        if (error.error.validationErrors){
+          this.errorMsg = error.error.validationErrors;
+        } else if (error.error.dataIntegrityError){
+          this.errorMsg.push(error.error.dataIntegrityError);
+        } 
+        else {
+          this.errorMsg.push(error.error.error);
+        }
       }});
   }
 
   login() {
     this.router.navigate(['/login']);
+  }
+
+  cancel(){
+    this.router.navigate(['']);
   }
 }

@@ -1,14 +1,15 @@
 <div class="cs-details">
     <h2>CS Details</h2>
+    <hr>
+    <h3>Restrictions Section</h3>
     <div class="alert alert-warning" role="alert" *ngIf="csDetails.restrictionsViolated.length">
       <p *ngFor="let msg of csDetails.restrictionsViolated">{{ msg }}</p>
     </div>
     <button type="button" class="btn btn-primary" (click)="addRestriction()">
       Add Restriction
     </button>
-    <button type="button" class="btn btn-danger" (click)="goBack()">
-      Go back
-    </button>
+    <hr>
+    <h3>Construction Site Details</h3>
     <table>
       <thead>
         <tr>
@@ -44,7 +45,7 @@
       </tbody>
     </table>
 </div>
-
+<hr>
 <div class="row">
   <div class="col-8">
     <label class="btn btn-default p-0">
@@ -62,3 +63,7 @@
 @if (message) {
 <div class="alert alert-secondary" role="alert">{{ message }}</div>
 }
+<hr>
+<button type="button" class="btn btn-danger" (click)="goBack()">
+  Go back
+</button>

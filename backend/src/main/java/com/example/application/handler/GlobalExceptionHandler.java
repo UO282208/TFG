@@ -3,12 +3,15 @@ package com.example.application.handler;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler{
@@ -45,6 +48,25 @@ public class GlobalExceptionHandler{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ExceptionResponse.builder()
             .validationErrors(errors)
+            .build()
+        );
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ExceptionResponse> handleDataIntegrityViolationException(DataIntegrityViolationException exp) {
+        System.out.println(exp.getMessage());
+        if (exp.getMessage().contains("email")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ExceptionResponse.builder()
+                .dataIntegrityError("The email is already in use")
+                .error(exp.getMessage())
+                .build()
+            );
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+            ExceptionResponse.builder()
+            .bussinessErrorDescription("Internal error, contact developers")
+            .error(exp.getMessage())
             .build()
         );
     }

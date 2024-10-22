@@ -41,4 +41,8 @@ export class LoginComponent {
   register() {
     this.router.navigate(['/register']);
   }
+
+  cancel(){
+    this.router.navigate(['']);
+  }
 }

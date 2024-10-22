@@ -1,5 +1,6 @@
 <div>
     <h3>Modify Construction Site</h3>
+    <hr>
     <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
         <p *ngFor="let msg of errorMsg">{{ msg }}</p>
     </div>
@@ -12,7 +13,7 @@
         <input [(ngModel)]="modifyConstructionSiteRequest.numOfWorkers" type="number" class="form-control" id="login" placeholder="1" value="1">
     </div>
     <div>
-        <button type="button" class="btn btn-primary" (click)="modify()">
+        <button type="button" class="btn btn-success" (click)="modify()">
             Apply
         </button>
         <button type="button" class="btn btn-danger" (click)="cancel()">

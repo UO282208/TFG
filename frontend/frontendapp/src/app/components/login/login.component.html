@@ -1,5 +1,6 @@
 <div>
     <h3>Login</h3>
+    <hr>
     <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
         <p *ngFor="let msg of errorMsg">{{ msg }}</p>
     </div>
@@ -12,8 +13,11 @@
         <input [(ngModel)]="authRequest.password" type="password" class="form-control" id="login" placeholder="*****">
     </div>
     <div>
-        <button type="button" class="btn btn-primary" (click)="login()">
+        <button type="button" class="btn btn-success" (click)="login()">
             Login
+        </button>
+        <button type="button" class="btn btn-danger" (click)="cancel()">
+            Go back
         </button>
         <div>
             Don't have an account?
