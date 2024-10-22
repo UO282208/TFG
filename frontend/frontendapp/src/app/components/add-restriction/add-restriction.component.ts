@@ -63,4 +63,8 @@ export class AddRestrictionComponent implements OnInit {
       }
     );
   }
+
+  cancel(){
+    this.router.navigate(['/details', this.csId]);
+  }
 }

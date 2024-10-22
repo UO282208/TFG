@@ -38,4 +38,8 @@ export class AddCsComponent implements OnInit {
         this.errorMsg = error.error.validationErrors;
       }});
     }
+
+    cancel(){
+      this.router.navigate(['/all-cs']);
+    }
 }

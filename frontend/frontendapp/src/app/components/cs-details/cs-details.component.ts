@@ -111,4 +111,8 @@ export class CsDetailsComponent implements OnInit{
   addRestriction() {
     this.router.navigate(['details', this.csId, 'addRestriction']);
   }
+
+  goBack() {
+    this.router.navigate(['/all-cs']);
+  }
 }

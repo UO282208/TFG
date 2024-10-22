@@ -1,19 +1,19 @@
 <div>
-    <h3>Add Construction Site</h3>
+    <h3>Modify Construction Site</h3>
     <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
         <p *ngFor="let msg of errorMsg">{{ msg }}</p>
     </div>
     <div>
         <label for ="login" class="form-label">Construction Site Name</label>
-        <input [(ngModel)]="newConstructionSiteRequest.name" type="name" class="form-control" id="login" placeholder="CS1">
+        <input [(ngModel)]="modifyConstructionSiteRequest.name" type="name" class="form-control" id="login" placeholder="CS1">
     </div>
     <div>
         <label for ="number" class="form-label">Number Of Workers</label>
-        <input [(ngModel)]="newConstructionSiteRequest.numOfWorkers" type="number" class="form-control" id="login" placeholder="1" value="1">
+        <input [(ngModel)]="modifyConstructionSiteRequest.numOfWorkers" type="number" class="form-control" id="login" placeholder="1" value="1">
     </div>
     <div>
-        <button type="button" class="btn btn-primary" (click)="add()">
-            Add Construction Site
+        <button type="button" class="btn btn-primary" (click)="modify()">
+            Apply
         </button>
         <button type="button" class="btn btn-danger" (click)="cancel()">
             Cancel

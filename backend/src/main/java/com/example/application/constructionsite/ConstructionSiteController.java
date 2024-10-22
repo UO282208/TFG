@@ -51,6 +51,13 @@ public class ConstructionSiteController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/modifyConstructionSite/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<?> modifyConstructionSite(@PathVariable Long id, @RequestBody @Valid ModifyConstructionSiteRequest modifyConstructionSiteRequest){
+        this.constructionSiteService.modifyConstructionSite(id, modifyConstructionSiteRequest);
+        return ResponseEntity.accepted().build();
+    }
+
     @GetMapping("/details/{id}")
     @ResponseBody
     public ResponseEntity<ConstructionSiteDetails> getConstructionSiteDetailsById(@PathVariable Long id) {

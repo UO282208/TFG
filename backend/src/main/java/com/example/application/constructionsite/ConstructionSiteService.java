@@ -56,6 +56,13 @@ public class ConstructionSiteService {
         constructionSiteDetailsRepository.delete(details);
     }
 
+    public void modifyConstructionSite(Long id, @Valid ModifyConstructionSiteRequest modifyConstructionSiteRequest) {
+        var site = constructionSiteRepository.getReferenceById(id);
+        site.setName(modifyConstructionSiteRequest.getName());
+        site.setNumOfWorkers(modifyConstructionSiteRequest.getNumOfWorkers());
+        constructionSiteRepository.save(site);
+    }
+
     public ConstructionSiteDetails getConstructionSiteDetailsById(Long id) {
         var site = constructionSiteRepository.getReferenceById(id);
         var details = site.getDetails();

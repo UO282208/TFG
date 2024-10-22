@@ -7,6 +7,7 @@ import { ListUserCsComponent } from './components/list-user-cs/list-user-cs.comp
 import { AddCsComponent } from './components/add-cs/add-cs.component';
 import { CsDetailsComponent } from './components/cs-details/cs-details.component';
 import { AddRestrictionComponent } from './components/add-restriction/add-restriction.component';
+import { ModifyCsComponent } from './components/modify-cs/modify-cs.component';
 
 export const routes: Routes = [
     {
@@ -29,6 +30,9 @@ export const routes: Routes = [
     },
     {
         path: 'details/:csId/addRestriction', component: AddRestrictionComponent
+    },
+    {
+        path: 'modify-cs/:csId', component: ModifyCsComponent
     },
     ];
 

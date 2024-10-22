@@ -59,4 +59,8 @@ export class ListUserCsComponent implements OnInit {
   viewDetails(csId: number){
     this.router.navigate(['/details', csId]);
   }
+
+  modify(csId: number){
+    this.router.navigate(['/modify-cs', csId]);
+  }
 }
