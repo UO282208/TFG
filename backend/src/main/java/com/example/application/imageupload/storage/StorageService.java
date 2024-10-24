@@ -24,6 +24,6 @@ public interface StorageService {
 
 	List<String> trim(List<String> strings);
 
-	List<String> processFile(String filename, String csId);
+	void processFile(String filename, String csId);
 
 }

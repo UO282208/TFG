@@ -60,7 +60,6 @@ export class CsDetailsComponent implements OnInit{
     this.csDetailsService.getConstructionSiteDetails(this.csId).subscribe(
       (data) => {
         this.csDetails = data;
-        console.log('Construction sites:', this.csDetails);
       },
       (error) => {
         console.error('Error fetching construction sites:', error);
@@ -75,17 +74,15 @@ export class CsDetailsComponent implements OnInit{
 
     if (file && allowedMimeTypes.includes(file.type)) {
       this.currentFile = file;
-      console.log('File selected:', this.currentFile);
     } else {
       this.currentFile = null;
-      alert('Invalid file type. Please select an image (JPG, PNG, WEBP).');
-      console.error('Invalid file type selected:', file?.type);
+      alert('Formato de archivo incorrecto. Porfavor seleccione una imagen (JPG, PNG, WEBP).');
     }
   }
 
   upload(): void {
     if (this.currentFile) {
-      this.message = 'File is being processed, please wait around 15 seconds before data is loaded'
+      this.message = 'El archivo está siendo procesado, por favor espere entre 15 a 30 segundos antes de que se complete la operación.'
       this.csDetailsService.uploadFile(this.currentFile, String(this.csId)).subscribe({
         next: (event: any) => {
           if (event instanceof HttpResponse) {
@@ -93,11 +90,13 @@ export class CsDetailsComponent implements OnInit{
           }
         },
         error: (err: any) => {
-          console.log(err);
-          if (err.error && err.error.message) {
-            this.message = err.error.message;
+          if (err.error.sizeLimitError) {
+            this.message = err.error.sizeLimitError;
+          }
+          else if (err.error && err.error.message) {
+            this.message = "El archivo pesa más de 10MB";
           } else {
-            this.message = 'Could not upload the file!';
+            this.message = 'No se ha podido subir el archivo';
           }
         },
         complete: () => {

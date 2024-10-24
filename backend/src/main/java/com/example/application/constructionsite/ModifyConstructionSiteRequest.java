@@ -12,10 +12,10 @@ import lombok.Setter;
 @Builder
 public class ModifyConstructionSiteRequest {
 
-    @NotEmpty(message = "Name must not be empty")
-    @NotBlank(message = "Name must not be empty")
+    @NotEmpty(message = "El campo nombre no debe estar vacío")
+    @NotBlank(message = "El campo nombre no debe estar vacío")
     private String name;
 
-    @Min(value = 1, message = "Workers must be greater than zero")
+    @Min(value = 1, message = "El campo número de trabajadores debe tener un valor superior a 0")
     private int numOfWorkers;  
 }

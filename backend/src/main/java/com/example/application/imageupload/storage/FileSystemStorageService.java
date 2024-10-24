@@ -73,16 +73,15 @@ public class FileSystemStorageService implements StorageService {
 	public void store(MultipartFile file) {
 		try {
 			if (file.isEmpty()) {
-				throw new StorageException("Failed to store empty file.");
+				throw new StorageException("Fallo al almacenar archivo vacío.");
 			}
 
 			Path destinationFile = this.rootLocation.resolve(
 					Paths.get(file.getOriginalFilename()))
 					.normalize().toAbsolutePath();
 			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
-				// This is a security check
 				throw new StorageException(
-						"Cannot store file outside current directory.");
+						"No se puede almacenar el archivo fuera del directorio.");
 			}
 			try (InputStream inputStream = file.getInputStream()) {
 				Files.copy(inputStream, destinationFile,
@@ -90,7 +89,7 @@ public class FileSystemStorageService implements StorageService {
 			}
 		}
 		catch (IOException e) {
-			throw new StorageException("Failed to store file.", e);
+			throw new StorageException("Fallo al almacenar el archivo.", e);
 		}
 	}
 
@@ -102,7 +101,7 @@ public class FileSystemStorageService implements StorageService {
 				.map(this.resultsLocation::relativize);
 		}
 		catch (IOException e) {
-			throw new StorageException("Failed to read stored files", e);
+			throw new StorageException("Fallo al leer archivos almacenados", e);
 		}
 
 	}
@@ -122,12 +121,12 @@ public class FileSystemStorageService implements StorageService {
 			}
 			else {
 				throw new StorageFileNotFoundException(
-						"Could not read file: " + filename);
+						"No se pudo leer el archivo: " + filename);
 
 			}
 		}
 		catch (MalformedURLException e) {
-			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+			throw new StorageFileNotFoundException("No se pudo leer el archivo: " + filename, e);
 		}
 	}
 
@@ -143,7 +142,7 @@ public class FileSystemStorageService implements StorageService {
 			Files.createDirectories(resultsLocation);
 		}
 		catch (IOException e) {
-			throw new StorageException("Could not initialize storage", e);
+			throw new StorageException("No se pudo inicializar el almacenamiento", e);
 		}
 	}
 
@@ -158,21 +157,20 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public List<String> processFile(String filename, String csId) {
+	public void processFile(String filename, String csId) {
 		var details = constructionSiteRepository.getReferenceById(Long.parseLong(csId)).getDetails();
-		details.setLastDayUploaded(LocalDateTime.now());
-		System.out.println(AI_PREDICTING_FILE_LOCATION.toAbsolutePath().toString());
 		ProcessBuilder processBuilder = new ProcessBuilder("python", AI_PREDICTING_FILE_LOCATION.toAbsolutePath().toString(), filename);
 		processBuilder.redirectErrorStream(true);
 
 		Process process;
 		try {
-			System.out.println("Workin");
 			process = processBuilder.start();		
 			process.waitFor();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		details.setLastDayUploaded(LocalDateTime.now());
 
 		int[] objectCounts = readObjectCounts(filename);
 		List<String> collectedErrors = new ArrayList<>();
@@ -184,45 +182,45 @@ public class FileSystemStorageService implements StorageService {
 					{
 						if (objectCounts[Elements.TRANSFORMERS.index] < r.getTransformers())
 						{
-							collectedErrors.add("Transformers count is less than required (" + r.getTransformers() + ").");
+							collectedErrors.add("Los transformadores no pueden ser menos de los requeridos (" + r.getTransformers() + ").");
 						}
 						if (objectCounts[Elements.EXPANSION_TANK.index] < r.getExpansionTanks()) 
 						{
-							collectedErrors.add("Expansion tanks count is less than required (" + r.getExpansionTanks() + ").");
+							collectedErrors.add("Los tanques de expansión no pueden ser menos de los requeridos (" + r.getExpansionTanks() + ").");
 						}
 						if (objectCounts[Elements.RADIATOR.index] < r.getRadiators()) 
 						{
-							collectedErrors.add("Radiators count is less than required (" + r.getRadiators() + ").");
+							collectedErrors.add("Los radiadores no pueden ser menos de los requeridos (" + r.getRadiators() + ").");
 						}
 						if (objectCounts[Elements.CONNECTION_POINT.index] < r.getConnectionPoints()) 
 						{
-							collectedErrors.add("Connection points count is less than required (" + r.getConnectionPoints() + ").");
+							collectedErrors.add("Los puntos de conexión no pueden ser menos de los requeridos (" + r.getConnectionPoints() + ").");
 						}
 						if (objectCounts[Elements.FIREWALL.index] < r.getFirewalls()) 
 						{
-							collectedErrors.add("Firewalls count is less than required (" + r.getFirewalls() + ").");
+							collectedErrors.add("Los muros cortafuegos no pueden ser menos de los requeridos (" + r.getFirewalls() + ").");
 						}
 					}
 					else{
 						if (objectCounts[Elements.TRANSFORMERS.index] > r.getTransformers())
 						{
-							collectedErrors.add("Transformers count is more than required (" + r.getTransformers() + ").");
+							collectedErrors.add("Los transformadores no pueden ser más de los requeridos (" + r.getTransformers() + ").");
 						}
 						if (objectCounts[Elements.EXPANSION_TANK.index] > r.getExpansionTanks()) 
 						{
-							collectedErrors.add("Expansion tanks count is more than required (" + r.getExpansionTanks() + ").");
+							collectedErrors.add("Los tanques de expansión no pueden ser más de los requeridos (" + r.getExpansionTanks() + ").");
 						}
 						if (objectCounts[Elements.RADIATOR.index] > r.getRadiators()) 
 						{
-							collectedErrors.add("Radiators count is more than required (" + r.getRadiators() + ").");
+							collectedErrors.add("Los radiadores no pueden ser más de los requeridos (" + r.getRadiators() + ").");
 						}
 						if (objectCounts[Elements.CONNECTION_POINT.index] > r.getConnectionPoints()) 
 						{
-							collectedErrors.add("Connection points count is more than required (" + r.getConnectionPoints() + ").");
+							collectedErrors.add("Los puntos de conexión no pueden ser más de los requeridos (" + r.getConnectionPoints() + ").");
 						}
 						if (objectCounts[Elements.FIREWALL.index] > r.getFirewalls()) 
 						{
-							collectedErrors.add("Firewalls count is more than required (" + r.getFirewalls() + ").");
+							collectedErrors.add("Los muros cortafuegos no pueden ser más de los requeridos (" + r.getFirewalls() + ").");
 						}
 					}
 				}
@@ -238,7 +236,6 @@ public class FileSystemStorageService implements StorageService {
 		details.setNumberOfFirewalls(details.getNumberOfFirewalls() + objectCounts[Elements.FIREWALL.index]);
 
 		this.constructionSiteDetailsRepository.save(details);
-		return collectedErrors;
 	}
 
 	private int[] readObjectCounts(String filename){

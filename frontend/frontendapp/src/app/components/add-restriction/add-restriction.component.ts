@@ -49,13 +49,12 @@ export class AddRestrictionComponent implements OnInit {
 
   onSubmit(): void {
     if (new Date(this.NewRestrictionRequest.endDate) <= new Date(this.NewRestrictionRequest.startDate)) {
-      alert("End date must be after the start date.");
+      alert("La fecha de fin debe ser después de la fecha de inicio.");
       return;
     }
 
     this.addRestrictionService.addRestriction(this.csId, this.NewRestrictionRequest).subscribe(
       (response) => {
-        console.log('Restriction added succesfully', response);
         this.router.navigate(['/details', this.csId]);
       },
       (error) => {

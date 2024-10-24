@@ -26,7 +26,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     public void register(RegistrationRequest request) {
-        var userRole = roleRepository.findByName("USER").orElseThrow(() -> new IllegalStateException("Role USER not initialized"));
+        var userRole = roleRepository.findByName("USER").orElseThrow(() -> new IllegalStateException("Rol USER no inicializado"));
         var user = AppUser.builder().name(request.getName())
                                     .email(request.getEmail())
                                     .password(passwordEncoder.encode(request.getPassword()))

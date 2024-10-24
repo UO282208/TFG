@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { ListFilesComponent } from './components/list-files/list-files.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ListUserCsComponent } from './components/list-user-cs/list-user-cs.component';
@@ -10,9 +9,6 @@ import { AddRestrictionComponent } from './components/add-restriction/add-restri
 import { ModifyCsComponent } from './components/modify-cs/modify-cs.component';
 
 export const routes: Routes = [
-    {
-        path: 'list_files', component: ListFilesComponent
-    },
     {
         path: 'login', component: LoginComponent
     },

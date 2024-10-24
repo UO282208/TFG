@@ -13,19 +13,19 @@ import lombok.Setter;
 @Builder
 public class NewRestrictionRequest {
 
-    @Min(value = 0, message = "Transformers be greater or equal to zero")
+    @Min(value = 0, message = "El campo transformadores debe tener un valor igual o superior a 0")
     private int transformers;
-    @Min(value = 0, message = "Expansion Tanks must be greater or equal to zero")
+    @Min(value = 0, message = "El campo tanques de expansión debe tener un valor igual o superior a 0")
     private int expansionTanks;
-    @Min(value = 0, message = "Radiators must be greater or equal to zero")
+    @Min(value = 0, message = "El campo radiadores debe tener un valor igual o superior a 0")
     private int radiators;
-    @Min(value = 0, message = "Connection Points must be greater or equal to zero")
+    @Min(value = 0, message = "El campo puntos de conexión debe tener un valor igual o superior a 0")
     private int connectionPoints;
-    @Min(value = 0, message = "Firewalls must be greater or equal to zero")
+    @Min(value = 0, message = "El campo muros cortafuegos tener un valor igual o superior a 0")
     private int firewalls;
-    @NotNull(message = "The Start Date must not be null")
+    @NotNull(message = "El campo fecha de inicio no debe estar vacío")
     private LocalDateTime startDate;
-    @NotNull(message = "The End Date must not be null")
+    @NotNull(message = "El campo fecha de fin no debe estar vacío")
     private LocalDateTime endDate;
     private boolean shouldAppear;
 }

@@ -26,13 +26,13 @@ public class ConstructionSiteService {
 
     public List<ConstructionSite> getConstructionSites(String username){
         var user = appUserRepository.findByEmail(username).
-        orElseThrow(() -> new IllegalStateException("User not found"));
+        orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
         return user.getAllConstructionSites();
     }
 
     public void addConstructionSite(NewConstructionSiteRequest newConstructionSiteRequest){
         var user = appUserRepository.findByEmail(jwtService.extractUsername(newConstructionSiteRequest.getToken())).
-        orElseThrow(() -> new IllegalStateException("User not found"));
+        orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
         var site = ConstructionSite.builder().name(newConstructionSiteRequest.getName())
                                             .numOfWorkers(newConstructionSiteRequest.getNumOfWorkers())
                                             .owner(user).build();
@@ -48,7 +48,7 @@ public class ConstructionSiteService {
     public void deleteConstructionSite(Long id){
         var site = constructionSiteRepository.getReferenceById(id);
         var user = appUserRepository.findByEmail(site.getOwner().getEmail())
-        .orElseThrow(() -> new IllegalStateException("User not found"));
+        .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
         site.setOwner(null);
         var details = site.getDetails();
         user.removeConstructionSite(site);

@@ -1,45 +1,45 @@
 <div class="cs-details">
-    <h2>CS Details</h2>
+    <h2>Detalles de la Obra</h2>
     <hr>
-    <h3>Restrictions Section</h3>
+    <h3>Restricciones</h3>
     <div class="alert alert-warning" role="alert" *ngIf="csDetails.restrictionsViolated.length">
       <p *ngFor="let msg of csDetails.restrictionsViolated">{{ msg }}</p>
     </div>
     <button type="button" class="btn btn-primary" (click)="addRestriction()">
-      Add Restriction
+      Añadir Restricciones
     </button>
     <hr>
-    <h3>Construction Site Details</h3>
+    <h3>Detalles de la Obra</h3>
     <table>
       <thead>
         <tr>
-          <th>Component</th>
-          <th>Units</th>
+          <th>Componentes</th>
+          <th>Unidades</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Number of Transformers</td>
+          <td>Número de Transformadores</td>
           <td>{{ csDetails.numberOfTransformers }}</td>
         </tr>
         <tr>
-          <td>Number of Expansion Tanks</td>
+          <td>Número de Tanques de Expansión</td>
           <td>{{ csDetails.numberOfExpansionTanks }}</td>
         </tr>
         <tr>
-          <td>Number of Radiators</td>
+          <td>Número de Radiadores</td>
           <td>{{ csDetails.numberOfRadiators }}</td>
         </tr>
         <tr>
-          <td>Number of Connection Points</td>
+          <td>Número de Puntos de Conexión</td>
           <td>{{ csDetails.numberOfConnectionPoints }}</td>
         </tr>
         <tr>
-          <td>Number of Firewalls</td>
+          <td>Número de Muros Cortafuegos</td>
           <td>{{ csDetails.numberOfFirewalls }}</td>
         </tr>
         <tr>
-          <td>Last Day Uploaded</td>
+          <td>Fecha de última Subida</td>
           <td>{{ csDetails.lastDayUploaded | date: 'short' }}</td>
         </tr>
       </tbody>
@@ -55,7 +55,7 @@
 
   <div class="col-4">
     <button class="btn btn-success btn-sm" [disabled]="hasUploadedToday() || !currentFile" (click)="upload()">
-      Upload
+      Subir
     </button>
   </div>
 </div>
@@ -65,5 +65,5 @@
 }
 <hr>
 <button type="button" class="btn btn-danger" (click)="goBack()">
-  Go back
+  Volver Atrás
 </button>

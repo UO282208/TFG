@@ -1,32 +1,32 @@
 <div>
-    <h3>Register</h3>
+    <h3>Registrarse</h3>
     <hr>
     <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
         <p *ngFor="let msg of errorMsg">{{ msg }}</p>
     </div>
     <div>
-        <label for ="name" class="form-label">Name</label>
+        <label for ="name" class="form-label">Nombre</label>
         <input [(ngModel)]="registerRequest.name" type="name" class="form-control" id="login" placeholder="John Doe">
     </div>
     <div>
-        <label for ="login" class="form-label">Email Address</label>
+        <label for ="login" class="form-label">Dirección de Email</label>
         <input [(ngModel)]="registerRequest.email" type="email" class="form-control" id="login" placeholder="name@domain.com">
     </div>
     <div>
-        <label for ="password" class="form-label">Password</label>
+        <label for ="password" class="form-label">Contraseña</label>
         <input [(ngModel)]="registerRequest.password" type="password" class="form-control" id="login" placeholder="*****">
     </div>
     <div>
         <button type="button" class="btn btn-success" (click)="register()">
-            Register
+            Registrarse
         </button>
         <button type="button" class="btn btn-danger" (click)="cancel()">
-            Go back
+            Volver Atrás
         </button>
         <div>
-            Already have an account?
+            ¿Ya tienes una cuenta?
             <button type="button" class="btn btn-link" (click)="login()">
-                Login
+                Iniciar Sesión
             </button>
         </div>
     </div>

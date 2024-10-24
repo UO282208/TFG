@@ -59,12 +59,12 @@ public class FileUploadController{
 	}
 
 	@PostMapping("/uploadFile")
-	public ResponseEntity<List<String>> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("csId") String csId) {
+	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("csId") String csId) {
 
 		storageService.store(file);
-		List<String> restrictionsViolated = storageService.processFile(file.getOriginalFilename(), csId);
+		storageService.processFile(file.getOriginalFilename(), csId);
 
-		return ResponseEntity.ok(restrictionsViolated);
+		return ResponseEntity.ok().build();
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)

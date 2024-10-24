@@ -13,13 +13,13 @@ import lombok.Setter;
 @Builder
 public class AuthenticationRequest {
 
-    @NotEmpty(message = "Password must not be empty")
-    @NotBlank(message = "Password  must not be empty")
-    @Size(min = 6, message = "Password must be at least 6 characters long")
+    @NotEmpty(message = "El campo contraseña no debe estar vacío")
+    @NotBlank(message = "El campo contraseña no debe estar vacío")
+    @Size(min = 6, message = "El campo contraseña debe tener 6 carácteres como mínimo")
     private String password;
     
-    @Email(message = "Incorrect email format")
-    @NotEmpty(message = "Email must not be empty")
-    @NotBlank(message = "Email must not be empty")
+    @Email(message = "El campo email tiene un formato incorrecto")
+    @NotEmpty(message = "El campo email no debe estar vacío")
+    @NotBlank(message = "El campo email no debe estar vacío")
     private String email;
 }

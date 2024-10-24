@@ -29,7 +29,6 @@ export class ListUserCsComponent implements OnInit {
     this.listUserCsService.getConstructionSites(this.tokenService.token).subscribe(
       (data) => {
         this.constructionSites = data;
-        console.log('Construction sites:', this.constructionSites);
       },
       (error) => {
         console.error('Error fetching construction sites:', error);
@@ -42,12 +41,11 @@ export class ListUserCsComponent implements OnInit {
   }
 
   delete(csId: number){
-    const confirmed = confirm('Are you sure you want to delete this construction site?');
+    const confirmed = confirm('¿Seguro que quiere eliminar esta obra?');
 
     if (confirmed) {
       this.listUserCsService.deleteConstructionSite(csId).subscribe(
         response => {
-          console.log('Delete successful', response);
           this.fetchConstructionSites();
         },
         error => {

@@ -31,7 +31,6 @@ export class AddCsComponent implements OnInit {
     this.newConstructionSiteRequest.token = this.tokenService.token;
     this.addCsService.addConstructionSite(this.newConstructionSiteRequest).subscribe({
       next: (response) => {
-        console.log('Construction site added succesfully', response);
         this.router.navigate(['/all-cs']);
       },
       error: (error) => {

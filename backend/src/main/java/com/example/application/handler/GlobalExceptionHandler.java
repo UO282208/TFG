@@ -10,8 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler{
@@ -21,7 +20,7 @@ public class GlobalExceptionHandler{
         exp.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
             ExceptionResponse.builder()
-            .bussinessErrorDescription("Internal error, contact developers")
+            .bussinessErrorDescription("Error interno, contacte con los desarrolladores")
             .error(exp.getMessage())
             .build()
         );
@@ -58,16 +57,26 @@ public class GlobalExceptionHandler{
         if (exp.getMessage().contains("email")){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ExceptionResponse.builder()
-                .dataIntegrityError("The email is already in use")
+                .dataIntegrityError("El email ya está en uso")
                 .error(exp.getMessage())
                 .build()
             );
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
             ExceptionResponse.builder()
-            .bussinessErrorDescription("Internal error, contact developers")
+            .bussinessErrorDescription("Error interno, contacte con los desarrolladores")
             .error(exp.getMessage())
             .build()
+        );
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ExceptionResponse> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exp) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        ExceptionResponse.builder()
+        .sizeLimitError("El archivo pesa más de 10MB")
+        .error(exp.getMessage())
+        .build()
         );
     }
 }

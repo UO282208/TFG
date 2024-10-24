@@ -32,7 +32,6 @@ export class ModifyCsComponent implements OnInit {
     this.errorMsg = [];
     this.modifyCsService.modifyConstructionSite(this.csId, this.modifyConstructionSiteRequest).subscribe({
       next: (response) => {
-        console.log('Construction site added succesfully', response);
         this.router.navigate(['/all-cs']);
       },
       error: (error) => {

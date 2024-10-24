@@ -6,8 +6,8 @@ import lombok.Getter;
 
 public enum BusinessErrorCodes {
 
-    NO_CODE(0, HttpStatus.NOT_IMPLEMENTED, "No code"),
-    BAD_CREDENTIALS(300, HttpStatus.FORBIDDEN, "User or password is incorrect");
+    NO_CODE(0, HttpStatus.NOT_IMPLEMENTED, "Sin código"),
+    BAD_CREDENTIALS(300, HttpStatus.FORBIDDEN, "El usuario o la contraseña son incorrectos");
     
     @Getter
     private final int code;
