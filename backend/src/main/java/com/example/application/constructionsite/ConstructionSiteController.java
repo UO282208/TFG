@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.application.constructionsitedetails.ConstructionSiteDetails;
+import com.example.application.restriction.NewRestrictionRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.application.constructionsitedetails.ConstructionSiteDetails;
 import com.example.application.constructionsitedetails.ConstructionSiteDetailsRepository;
+import com.example.application.restriction.NewRestrictionRequest;
 import com.example.application.restriction.Restriction;
 import com.example.application.restriction.RestrictionRepository;
 import com.example.application.security.JwtService;

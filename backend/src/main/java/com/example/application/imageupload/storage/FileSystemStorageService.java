@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.application.constructionsite.ConstructionSiteRepository;
@@ -50,7 +49,6 @@ public class FileSystemStorageService implements StorageService {
 
 	private final Path rootLocation;
 	private final Path resultsLocation;
-	private final static String FILE_RESPONSE_LOCATION = "http://localhost:8080/api/";
 	private final static Path AI_PREDICTING_FILE_LOCATION = Path.of("src", "main", "yolov8", "predictimg.py");
 	private final ConstructionSiteRepository constructionSiteRepository;
 	private final ConstructionSiteDetailsRepository constructionSiteDetailsRepository;
@@ -131,11 +129,6 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void deleteAll() {
-		FileSystemUtils.deleteRecursively(rootLocation.toFile());
-	}
-
-	@Override
 	public void init() {
 		try {
 			Files.createDirectories(rootLocation);
@@ -144,16 +137,6 @@ public class FileSystemStorageService implements StorageService {
 		catch (IOException e) {
 			throw new StorageException("No se pudo inicializar el almacenamiento", e);
 		}
-	}
-
-	@Override
-	public List<String> trim(List<String> strings) {
-		List<String> trimmedStrings = new ArrayList<>(strings.size());
-    
-		for (String string : strings) {
-			trimmedStrings.add(string.substring(FILE_RESPONSE_LOCATION.length()));
-		}
-		return trimmedStrings;
 	}
 
 	@Override

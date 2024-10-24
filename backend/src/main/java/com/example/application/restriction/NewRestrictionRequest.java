@@ -1,4 +1,4 @@
-package com.example.application.constructionsite;
+package com.example.application.restriction;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
