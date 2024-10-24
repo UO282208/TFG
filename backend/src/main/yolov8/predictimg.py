@@ -26,9 +26,6 @@ for i, r in enumerate(results):
     im_bgr = r.plot()  
     im_rgb = Image.fromarray(im_bgr[..., ::-1])  
 
-    (r.show())
-
-
     r.save(os.path.join(os.path.join(os.path.dirname(__file__), "../../../storefiles/results/"), f"Processed{filename}"))
 
     for box in r.boxes:
