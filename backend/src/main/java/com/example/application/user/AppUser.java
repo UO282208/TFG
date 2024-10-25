@@ -9,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.example.application.constructionsite.ConstructionSite;
@@ -28,10 +27,14 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
+@Getter
+@Setter
 @Table
 @Builder
 @AllArgsConstructor
@@ -62,61 +65,6 @@ public class AppUser implements UserDetails, Principal{
     
     @OneToMany(mappedBy="owner")
     private List<ConstructionSite> constructionSites;
-
-    public AppUser (Long id, String name, String password, String email){
-        setId(id);
-        setName(name);
-        setPassword(password);
-        setEmail(email);
-        constructionSites = new ArrayList<ConstructionSite>();
-    }
-
-    public AppUser (String name, String password, String email){
-        setName(name);
-        setPassword(password);
-        setEmail(email);
-        constructionSites = new ArrayList<ConstructionSite>();
-    }
-
-    public Long getId()
-    {
-        return this.id;
-    }
-
-    public String getName()
-    {
-        return this.name;
-    }
-
-    public String getPassword()
-    {
-        return this.password;
-    }
-
-    public String getEmail()
-    {
-        return this.email;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
 
     public List<ConstructionSite> getAllConstructionSites() {
         return this.constructionSites;
