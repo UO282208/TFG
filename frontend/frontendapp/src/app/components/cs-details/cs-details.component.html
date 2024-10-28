@@ -54,7 +54,7 @@
   </div>
 
   <div class="col-4">
-    <button class="btn btn-success btn-sm" [disabled]="hasUploadedToday() || !currentFile" (click)="upload()">
+    <button class="btn btn-success btn-sm" [disabled]="hasUploadedToday() || !currentFile" (click)="upload()" data-testid="upload-button">
       Subir
     </button>
   </div>

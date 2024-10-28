@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CsDetailsService } from '../../services/cs-details/cs-details.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetCsDetailsRequest } from '../../models/GetCsDetailsRequest';
-import { HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { TokenService } from '../../services/token/token.service';
 
 @Component({
@@ -68,7 +68,7 @@ export class CsDetailsComponent implements OnInit{
   }
 
   selectFile(event: any): void {
-    const file = event.target.files.item(0);
+    const file = event.target.files[0];
 
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
@@ -84,7 +84,7 @@ export class CsDetailsComponent implements OnInit{
     if (this.currentFile) {
       this.message = 'El archivo está siendo procesado, por favor espere entre 15 a 30 segundos antes de que se complete la operación.'
       this.csDetailsService.uploadFile(this.currentFile, String(this.csId)).subscribe({
-        next: (event: any) => {
+        next: (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
           }
