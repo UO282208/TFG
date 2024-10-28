@@ -143,7 +143,7 @@ describe('CsDetailsComponent', () => {
     });
   });
 
-  it('should disable the upload button if hasUploadedToday() returns true', () => {
+  it('deshabilita el botón de subida si hasUploadedToday() devuelve verdadero', () => {
     spyOn(component, 'hasUploadedToday').and.returnValue(true);
     component.currentFile = new File([''], 'test.png', { type: 'image/png' });
     fixture.detectChanges();
@@ -152,12 +152,20 @@ describe('CsDetailsComponent', () => {
     expect(button.disabled).toBeTrue();
   });
 
-  it('should disable the upload button if currentFile is null', () => {
+  it('deshabilita el botón de subida si currentFile es undefined', () => {
     spyOn(component, 'hasUploadedToday').and.returnValue(false);
     component.currentFile = undefined;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('[data-testid="upload-button"]') as HTMLButtonElement;
     expect(button.disabled).toBeTrue();
+  });
+
+  it('habilita el botón de subida si asUploadedToday() devuelve falso y hay un archivo', () => {
+    spyOn(component, 'hasUploadedToday').and.returnValue(false);
+    component.currentFile = new File([''], 'test.png', { type: 'image/png' });
+
+    const button = fixture.nativeElement.querySelector('[data-testid="upload-button"]') as HTMLButtonElement;
+    expect(button.disabled).toBeFalse();
   });
 });
