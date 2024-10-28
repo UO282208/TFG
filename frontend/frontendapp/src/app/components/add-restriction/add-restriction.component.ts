@@ -39,12 +39,12 @@ export class AddRestrictionComponent implements OnInit {
 
   onStartDateChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.NewRestrictionRequest.startDate = new Date(input.value + 'T02:00:00'); 
+    this.NewRestrictionRequest.startDate = new Date(input.value + 'T01:00:00'); 
   }
 
   onEndDateChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.NewRestrictionRequest.endDate = new Date(input.value + 'T02:00:00'); 
+    this.NewRestrictionRequest.endDate = new Date(input.value + 'T01:00:00'); 
   }
 
   onSubmit(): void {

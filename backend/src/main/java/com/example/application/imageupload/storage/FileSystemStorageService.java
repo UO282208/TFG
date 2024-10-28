@@ -221,7 +221,7 @@ public class FileSystemStorageService implements StorageService {
 		this.constructionSiteDetailsRepository.save(details);
 	}
 
-	private int[] readObjectCounts(String filename){
+	public int[] readObjectCounts(String filename){
 		String jsonFilePath = "storefiles/results/ObjectCounts_" + filename + ".json";
 		ObjectMapper objectMapper = new ObjectMapper();
 		int[] objectCounts = new int[Elements.values().length];

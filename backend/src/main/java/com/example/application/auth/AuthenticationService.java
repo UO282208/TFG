@@ -3,6 +3,7 @@ package com.example.application.auth;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +27,12 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     public void register(RegistrationRequest request) {
+        if (appUserRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new DataIntegrityViolationException("User already exists"); 
+        }
+
         var userRole = roleRepository.findByName("USER").orElseThrow(() -> new IllegalStateException("Rol USER no inicializado"));
+        
         var user = AppUser.builder().name(request.getName())
                                     .email(request.getEmail())
                                     .password(passwordEncoder.encode(request.getPassword()))
