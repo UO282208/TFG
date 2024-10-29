@@ -28,7 +28,7 @@ public class AuthenticationService {
 
     public void register(RegistrationRequest request) {
         if (appUserRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new DataIntegrityViolationException("User already exists"); 
+            throw new DataIntegrityViolationException("El email ya está en uso"); 
         }
 
         var userRole = roleRepository.findByName("USER").orElseThrow(() -> new IllegalStateException("Rol USER no inicializado"));
