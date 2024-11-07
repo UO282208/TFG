@@ -53,8 +53,9 @@ public class ConstructionSiteService {
         site.setOwner(null);
         var details = site.getDetails();
         user.removeConstructionSite(site);
-        constructionSiteRepository.delete(site);
+        restrictionRepository.deleteAll(site.getDetails().getAllRestrictions());
         constructionSiteDetailsRepository.delete(details);
+        constructionSiteRepository.delete(site);
     }
 
     public void modifyConstructionSite(Long id, @Valid ModifyConstructionSiteRequest modifyConstructionSiteRequest) {
