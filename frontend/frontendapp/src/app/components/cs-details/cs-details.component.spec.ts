@@ -8,6 +8,7 @@ import { of, throwError } from 'rxjs';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ElementRef } from '@angular/core';
 
 describe('CsDetailsComponent', () => {
   let component: CsDetailsComponent;
@@ -46,6 +47,7 @@ describe('CsDetailsComponent', () => {
     
     fixture = TestBed.createComponent(CsDetailsComponent);
     component = fixture.componentInstance;
+    component.fileInput = { nativeElement: { value: '' } } as ElementRef;
 
     csDetailsServiceMock.getConstructionSiteDetails.and.returnValue(of({
       numberOfTransformers: 1,
@@ -57,19 +59,6 @@ describe('CsDetailsComponent', () => {
       restrictionsViolated: []
     }));
   });
-
-  describe('hasUploadedToday', () => {
-    it('verdadero si ha subido archivo hoy', () => {
-      component.csDetails.lastDayUploaded = new Date();
-      expect(component.hasUploadedToday()).toBeTrue();
-    });
-
-    it('falso si no ha subido archivo hoy', () => {
-      component.csDetails.lastDayUploaded = new Date(Date.now() - 86400000);
-      expect(component.hasUploadedToday()).toBeFalse();
-    });
-  });
-
 
   describe('getDetails', () => {
     it('devuelve los detalles adicionales correctamente', () => {
@@ -110,7 +99,7 @@ describe('CsDetailsComponent', () => {
 
   describe('upload', () => {
     it('procesa el archivo correctamente', () => {
-      const mockResponse = { message: 'Upload successful' };
+      const mockResponse = { message: 'Subida satisfactoria' };
       component.currentFile = new File([''], 'test.png', { type: 'image/png' });
 
       csDetailsServiceMock.uploadFile.and.returnValue(
@@ -143,17 +132,7 @@ describe('CsDetailsComponent', () => {
     });
   });
 
-  it('deshabilita el botón de subida si hasUploadedToday() devuelve verdadero', () => {
-    spyOn(component, 'hasUploadedToday').and.returnValue(true);
-    component.currentFile = new File([''], 'test.png', { type: 'image/png' });
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('[data-testid="upload-button"]') as HTMLButtonElement;
-    expect(button.disabled).toBeTrue();
-  });
-
   it('deshabilita el botón de subida si currentFile es undefined', () => {
-    spyOn(component, 'hasUploadedToday').and.returnValue(false);
     component.currentFile = undefined;
     fixture.detectChanges();
 
@@ -161,8 +140,7 @@ describe('CsDetailsComponent', () => {
     expect(button.disabled).toBeTrue();
   });
 
-  it('habilita el botón de subida si asUploadedToday() devuelve falso y hay un archivo', () => {
-    spyOn(component, 'hasUploadedToday').and.returnValue(false);
+  it('habilita el botón de subida si hay un archivo', () => {
     component.currentFile = new File([''], 'test.png', { type: 'image/png' });
 
     const button = fixture.nativeElement.querySelector('[data-testid="upload-button"]') as HTMLButtonElement;

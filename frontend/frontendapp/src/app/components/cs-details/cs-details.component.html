@@ -49,12 +49,12 @@
 <div class="row">
   <div class="col-8">
     <label class="btn btn-default p-0">
-      <input type="file" (change)="selectFile($event)" accept=".jpg,.jpeg,.png,.webp"/>
+      <input #fileInput type="file" (change)="selectFile($event)" accept=".jpg,.jpeg,.png,.webp"/>
     </label>
   </div>
 
   <div class="col-4">
-    <button class="btn btn-success btn-sm" [disabled]="hasUploadedToday() || !currentFile" (click)="upload()" data-testid="upload-button">
+    <button class="btn btn-success btn-sm" [disabled]="!currentFile" (click)="upload()" data-testid="upload-button">
       Subir
     </button>
   </div>

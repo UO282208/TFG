@@ -18,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import com.example.application.constructionsite.ConstructionSite;
 import com.example.application.constructionsite.ConstructionSiteRepository;
 import com.example.application.constructionsite.ConstructionSiteService;
+import com.example.application.constructionsitedetails.ConstructionSiteDetails;
 import com.example.application.constructionsitedetails.ConstructionSiteDetailsRepository;
 import com.example.application.user.AppUser;
 import com.example.application.user.AppUserRepository;
@@ -47,7 +48,7 @@ public class DeleteCSServiceTest {
     @Test
     void shouldDeleteConstructionSiteSuccessfully() {
 
-        ConstructionSite site = ConstructionSite.builder().id(1).name("CS1").numOfWorkers(1).build();
+        ConstructionSite site = ConstructionSite.builder().id(1).name("CS1").numOfWorkers(1).details(new ConstructionSiteDetails()).build();
         AppUser user = AppUser.builder().email("prueba@gmail.com").constructionSites(new ArrayList<>(List.of(site))).build();
         site.setOwner(user);
         

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CsDetailsService } from '../../services/cs-details/cs-details.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { TokenService } from '../../services/token/token.service';
   styleUrl: './cs-details.component.css'
 })
 export class CsDetailsComponent implements OnInit{
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   csDetails: GetCsDetailsRequest = {
     numberOfTransformers: 0,
@@ -32,20 +33,6 @@ export class CsDetailsComponent implements OnInit{
   message = '';
 
   constructor(private csDetailsService: CsDetailsService, private router: Router, private route: ActivatedRoute, private tokenService: TokenService) { }
-
-  hasUploadedToday(): boolean{
-    if (this.csDetails.lastDayUploaded) {
-      const lastUploadedDate = new Date(this.csDetails.lastDayUploaded);
-      const today = new Date();
-
-      return (
-          lastUploadedDate.getFullYear() === today.getFullYear() &&
-          lastUploadedDate.getMonth() === today.getMonth() &&
-          lastUploadedDate.getDate() === today.getDate()
-      );
-    }
-    return false;
-  }
 
   ngOnInit(): void {
     if (!this.tokenService.isLoggedIn) {
@@ -87,6 +74,9 @@ export class CsDetailsComponent implements OnInit{
         next: (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
+            this.currentFile = null;
+            this.message = 'Subida satisfactoria'
+            this.fileInput.nativeElement.value = '';
           }
         },
         error: (err: any) => {
@@ -100,7 +90,6 @@ export class CsDetailsComponent implements OnInit{
           }
         },
         complete: () => {
-          this.currentFile = null;
           this.getDetails();
         },
       });
