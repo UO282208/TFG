@@ -87,7 +87,7 @@ public class FileUploadControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));

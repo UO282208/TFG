@@ -98,7 +98,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        ResultActions result = mockMvc.perform(post("/api/constructionSite//addConstructionSite")
+        ResultActions result = mockMvc.perform(post("/api/constructionSite//ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -119,7 +119,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        ResultActions result = mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        ResultActions result = mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -128,7 +128,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         assertEquals(1, constructionSiteRepository.count());
 
-        ResultActions result2 = mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        ResultActions result2 = mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -148,7 +148,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("").numOfWorkers(0).build();
 
-        ResultActions result = mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        ResultActions result = mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -176,12 +176,12 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
 
-        ResultActions result = mockMvc.perform(get("/api/constructionSite/allConstructionSites")
+        ResultActions result = mockMvc.perform(get("/api/constructionSite/ConstructionSites")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + res.getToken()));
@@ -199,14 +199,14 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
 
         Long id = constructionSiteRepository.findAll().get(0).getId();
 
-        ResultActions result = mockMvc.perform(delete("/api/constructionSite/deleteConstructionSite")
+        ResultActions result = mockMvc.perform(delete("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .param("id", id.toString()));
@@ -225,7 +225,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -254,7 +254,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -293,14 +293,14 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
 
         Long id = constructionSiteRepository.findAll().get(0).getId();
 
-        ResultActions result = mockMvc.perform(get("/api/constructionSite/details/" + id.toString())
+        ResultActions result = mockMvc.perform(get("/api/constructionSite/" + id.toString())
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON));
 
@@ -317,7 +317,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -327,7 +327,7 @@ public class ConstructionSiteControllerIntegrationTest {
         NewRestrictionRequest req = NewRestrictionRequest.builder().transformers(1).expansionTanks(1).radiators(1)
         .connectionPoints(1).firewalls(1).startDate(LocalDateTime.now()).endDate(LocalDateTime.now().plusDays(1)).shouldAppear(true).build();
 
-        ResultActions result = mockMvc.perform(post("/api/constructionSite/details/" + id.toString() + "/addRestriction") 
+        ResultActions result = mockMvc.perform(post("/api/constructionSite/" + id.toString() + "/Restriction") 
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(req)));
@@ -346,7 +346,7 @@ public class ConstructionSiteControllerIntegrationTest {
 
         NewConstructionSiteRequest res2 = NewConstructionSiteRequest.builder().token(res.getToken()).name("CS1").numOfWorkers(1).build();
 
-        mockMvc.perform(post("/api/constructionSite/addConstructionSite")
+        mockMvc.perform(post("/api/constructionSite/ConstructionSite")
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(res2)));
@@ -356,7 +356,7 @@ public class ConstructionSiteControllerIntegrationTest {
         NewRestrictionRequest req = NewRestrictionRequest.builder().transformers(-1).expansionTanks(-1).radiators(-1)
         .connectionPoints(-1).firewalls(-1).startDate(null).endDate(null).shouldAppear(true).build();
 
-        ResultActions result = mockMvc.perform(post("/api/constructionSite/details/" + id.toString() + "/addRestriction") 
+        ResultActions result = mockMvc.perform(post("/api/constructionSite/" + id.toString() + "/Restriction") 
             .with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(req)));
