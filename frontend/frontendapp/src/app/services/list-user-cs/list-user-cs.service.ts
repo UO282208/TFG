@@ -16,12 +16,12 @@ export class ListUserCsService {
       'Authorization': `Bearer ${token}`
     });
     
-    return this.http.get(`${this.apiBaseUrl}/api/constructionSite/allConstructionSites`, { headers });
+    return this.http.get(`${this.apiBaseUrl}/api/constructionSite/ConstructionSites`, { headers });
   }
 
   deleteConstructionSite(csId: number): Observable<any> {
     const params = new HttpParams().set('id', csId);
-    return this.http.delete(`${this.apiBaseUrl}/api/constructionSite/deleteConstructionSite`, { params });
+    return this.http.delete(`${this.apiBaseUrl}/api/constructionSite/ConstructionSite`, { params });
   }
 
 }

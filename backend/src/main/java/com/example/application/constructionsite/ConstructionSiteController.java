@@ -30,7 +30,7 @@ public class ConstructionSiteController {
     
     private final ConstructionSiteService constructionSiteService;
 
-    @GetMapping("/allConstructionSites")
+    @GetMapping("/ConstructionSites")
     @ResponseBody
     public ResponseEntity<List<ConstructionSite>> getConstructionSites(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -39,14 +39,14 @@ public class ConstructionSiteController {
         return ResponseEntity.ok(sites);
     }
 
-    @PostMapping("/addConstructionSite")
+    @PostMapping("/ConstructionSite")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> addConstructionSite(@RequestBody @Valid NewConstructionSiteRequest newConstructionSiteRequest){
         this.constructionSiteService.addConstructionSite(newConstructionSiteRequest);
         return ResponseEntity.accepted().build();
     }
 
-    @DeleteMapping("/deleteConstructionSite")
+    @DeleteMapping("/ConstructionSite")
     public ResponseEntity<?> deleteConstructionSite(@RequestParam Long id){
         this.constructionSiteService.deleteConstructionSite(id);
         return ResponseEntity.ok().build();
@@ -59,14 +59,14 @@ public class ConstructionSiteController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<ConstructionSiteDetails> getConstructionSiteDetailsById(@PathVariable Long id) {
         ConstructionSiteDetails details = this.constructionSiteService.getConstructionSiteDetailsById(id);
         return ResponseEntity.ok(details);
     }
 
-    @PostMapping("details/{id}/addRestriction")
+    @PostMapping("{id}/Restriction")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> addRestriction(@PathVariable Long id, @RequestBody @Valid NewRestrictionRequest newRestrictionRequest) {
         this.constructionSiteService.addRestriction(id, newRestrictionRequest);

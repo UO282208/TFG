@@ -12,7 +12,7 @@ export class CsDetailsService {
   constructor(private http: HttpClient) { }
 
   getConstructionSiteDetails(csId: number): Observable<any> {
-    return this.http.get(`${this.apiBaseUrl}/api/constructionSite/details/${csId}`);
+    return this.http.get(`${this.apiBaseUrl}/api/constructionSite/${csId}`);
   }
 
   uploadFile(file: File, csId: string): Observable<HttpEvent<any>> {

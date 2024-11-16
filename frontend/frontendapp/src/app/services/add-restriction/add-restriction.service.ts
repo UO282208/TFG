@@ -13,6 +13,6 @@ export class AddRestrictionService {
   constructor(private http: HttpClient) { }
 
   addRestriction(csdId: number, newRestrictionRequest: NewRestrictionRequest): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/api/constructionSite/details/${csdId}/addRestriction`, newRestrictionRequest);
+    return this.http.post(`${this.apiBaseUrl}/api/constructionSite/${csdId}/Restriction`, newRestrictionRequest);
   }
 }

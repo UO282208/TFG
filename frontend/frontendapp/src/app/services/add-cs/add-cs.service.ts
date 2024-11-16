@@ -13,6 +13,6 @@ export class AddCsService {
   constructor(private http: HttpClient) { }
 
   addConstructionSite(newConstructionSiteRequest: NewConstructionSiteRequest): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/api/constructionSite/addConstructionSite`, newConstructionSiteRequest);
+    return this.http.post(`${this.apiBaseUrl}/api/constructionSite/ConstructionSite`, newConstructionSiteRequest);
   }
 }
