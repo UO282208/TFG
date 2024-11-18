@@ -1,29 +1,29 @@
-<div>
+<div class="form-header">
     <h3>Iniciar Sesión</h3>
-    <hr>
+</div>
+<hr>
+<div class="form-alert">
     <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
         <p *ngFor="let msg of errorMsg">{{ msg }}</p>
     </div>
-    <div>
-        <label for ="login" class="form-label">Dirección de Email</label>
-        <input [(ngModel)]="authRequest.email" type="email" class="form-control" id="login" placeholder="name@domain.com">
-    </div>
-    <div>
-        <label for ="password" class="form-label">Contraseña</label>
-        <input [(ngModel)]="authRequest.password" type="password" class="form-control" id="login" placeholder="*****">
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary" (click)="login()">
-            Iniciar Sesión
-        </button>
-        <button type="button" class="btn btn-secondary" (click)="cancel()">
-            Volver Atrás
-        </button>
-        <div>
-            ¿No tienes una cuenta?
-            <button type="button" class="btn btn-link" (click)="register()">
-                Registrarse
-            </button>
-        </div>
-    </div>
+</div>
+
+<div class="form-group">
+    <label for="login" class="form-label">Dirección de Email</label>
+    <input [(ngModel)]="authRequest.email" type="email" class="form-control" id="login" placeholder="name@domain.com">
+</div>
+
+<div class="form-group">
+    <label for="password" class="form-label">Contraseña</label>
+    <input [(ngModel)]="authRequest.password" type="password" class="form-control" id="password" placeholder="*****">
+</div>
+
+<div class="form-actions">
+    <button type="button" class="btn btn-primary" (click)="login()">Iniciar Sesión</button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Volver Atrás</button>
+</div>
+
+<div class="form-register">
+    ¿No tienes una cuenta?
+    <button type="button" class="btn btn-link" (click)="register()">Registrarse</button>
 </div>

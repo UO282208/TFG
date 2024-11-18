@@ -1,31 +1,39 @@
-<div>
+<div class="form-header">
   <h3>Obras</h3>
-  <hr>
+</div>
+<hr>
+<div class="form-actions">
   <button type="button" class="btn btn-primary" (click)="add()">
       Añadir Obra
   </button>
 </div>
+
 <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-4" *ngFor="let site of constructionSites">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Obra: {{ site.name }}</h5>
-          <p class="card-text">
-            <strong>ID:</strong> {{ site.id }}<br>
-            <strong>Número de Trabajadores:</strong> {{ site.numOfWorkers }}
-          </p>
-          <button type="button" class="btn btn-primary"(click)="viewDetails(site.id)">
-            Ver Detalles/Subir
+<div class="row">
+  <div class="col-md-4" *ngFor="let site of constructionSites">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Obra: {{ site.name }}</h5>
+        <p class="card-text">
+          <strong>ID:</strong> {{ site.id }}<br>
+          <strong>Número de Trabajadores:</strong> {{ site.numOfWorkers }}
+        </p>
+        <div class="form-buttons">
+          <button type="button" class="btn btn-secondary" (click)="viewDetails(site.id)" style="margin-right: 5px; margin-bottom: 5px;">
+            <img src="assets/icons/ver-detalles-icon.png" alt="Ver Detalles" style="width: 20px; height: 20px;">
+              Ver Detalles/Subir
           </button>
-          <button type="button" class="btn btn-primary" (click)="modify(site.id)">
-            Modificar
+          <button type="button" class="btn btn-secondary" (click)="modify(site.id)" style="margin-right: 5px; margin-bottom: 5px;">
+            <img src="assets/icons/modificar-detalles-icon.png" alt="Ver Detalles" style="width: 20px; height: 20px;">
+              Modificar
           </button>
-          <button type="button" class="btn btn-danger" (click)="delete(site.id)">
-            Borrar
+          <button type="button" class="btn btn-secondary" (click)="delete(site.id)" style="margin-right: 5px;">
+            <img src="assets/icons/borrar-icon.png" alt="Ver Detalles" style="width: 20px; height: 20px;">
+              Borrar
           </button>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>

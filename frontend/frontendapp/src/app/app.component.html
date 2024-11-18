@@ -1,6 +1,9 @@
 <div class="container">
   <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h3>IA para la detección de objetos en una obra</h3>
+    <h3>
+      <img src="assets/icons/ObraDetect.png"  style="width: 40px; margin-right: 10px;">
+      ObraDetection
+    </h3>
     <div>
       <ng-container *ngIf="tokenService.isLoggedIn; else noAuth">
         <span>Bienvenido, {{ tokenService.userName }}</span>

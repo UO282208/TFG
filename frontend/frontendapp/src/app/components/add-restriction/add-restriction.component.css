@@ -1,0 +1,50 @@
+.form-header {
+    margin-left: 15px;
+    max-width: 400px;
+}
+
+.form-alert {
+    padding-left: 10px;
+    max-width: 400px;
+}
+
+.form-group {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.form-actions {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.form-register {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.col-4 {
+    max-width: 25%;
+}
+
+.col-8 {
+    max-width: 75%;
+}
+
+.table {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.table th, .table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+}

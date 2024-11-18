@@ -1,0 +1,29 @@
+.container {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.container h3 {
+    margin: 0;
+    color: #343a40;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.container a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #007bff;
+    transition: color 0.2s ease-in-out;
+}
+
+.container a:hover {
+    color: #0056b3;
+}
+
+.container span {
+    font-size: 1rem;
+    color: #495057;
+}

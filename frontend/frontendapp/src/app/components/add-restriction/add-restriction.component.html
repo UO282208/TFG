@@ -1,55 +1,61 @@
-<h3>Añadir Restricción</h3>
-<hr>
-<div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
-    <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+<div class="form-header">
+    <h3>Añadir Restricción</h3>
 </div>
-<form (ngSubmit)="onSubmit()">
+<hr>
 
-    <div>
+<div class="form-alert">
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+        <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+    </div>
+</div>
+
+<form (ngSubmit)="onSubmit()">
+    <div class="form-group">
         <label for="transformers" class="form-label">Transformadores</label>
         <input [(ngModel)]="NewRestrictionRequest.transformers" type="number" min="0" class="form-control" id="transformers" name="transformers" placeholder="0">
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="expansionTanks" class="form-label">Tanques de Expansión</label>
         <input [(ngModel)]="NewRestrictionRequest.expansionTanks" type="number" min="0" class="form-control" id="expansionTanks" name="expansionTanks" placeholder="0">
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="radiators" class="form-label">Radiadores</label>
         <input [(ngModel)]="NewRestrictionRequest.radiators" type="number" min="0" class="form-control" id="radiators" name="radiators" placeholder="0">
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="connectionPoints" class="form-label">Puntos de Conexión</label>
         <input [(ngModel)]="NewRestrictionRequest.connectionPoints" type="number" min="0" class="form-control" id="connectionPoints" name="connectionPoints" placeholder="0">
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="firewalls" class="form-label">Muros Cortafuegos</label>
         <input [(ngModel)]="NewRestrictionRequest.firewalls" type="number" min="0" class="form-control" id="firewalls" name="firewalls" placeholder="0">
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="startDate" class="form-label">Fecha de Inicio</label>
-        <input type="date"  class="form-control" id="startDate"  name="startDate" (change)="onStartDateChange($event)" />
+        <input type="date" class="form-control" id="startDate" name="startDate" (change)="onStartDateChange($event)" />
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="endDate" class="form-label">Fecha de Fin</label>
-        <input type="date"  class="form-control" id="endDate"  name="endDate" (change)="onEndDateChange($event)" />
+        <input type="date" class="form-control" id="endDate" name="endDate" (change)="onEndDateChange($event)" />
     </div>
-  
-    <div>
+
+    <div class="form-group">
         <label for="shouldAppear" class="form-label">Mínimo/Máximo</label>
         <select [(ngModel)]="NewRestrictionRequest.shouldAppear" class="form-control" id="shouldAppear" name="shouldAppear">
-          <option [value]="true">Mínimo</option>
-          <option [value]="false">Máximo</option>
+            <option [value]="true">Mínimo</option>
+            <option [value]="false">Máximo</option>
         </select>
     </div>
-  
-    <button type="submit" class="btn btn-primary">Enviar</button>
-    <button type="button" class="btn btn-secondary" (click)="cancel()">
-        Cancelar
-    </button>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>
 </form>
+

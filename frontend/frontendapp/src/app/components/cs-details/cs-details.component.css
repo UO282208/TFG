@@ -1,15 +1,62 @@
 table {
     border-collapse: collapse;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.table thead {
+    background-color: #f8f9fa;
 }
 
 th {
     border-bottom: 2px solid black;
+    padding: 8px;
+    text-align: left;
 }
 
 td {
     border-bottom: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
 }
 
 th, td {
     padding: 4px 8px;
+}
+
+.form-header {
+    margin-left: 15px;
+    max-width: 400px;
+}
+
+.form-alert {
+    padding-left: 10px;
+    max-width: 750px;
+}
+
+.form-group {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.form-actions {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.form-register {
+    padding: 10px;
+    max-width: 400px;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.col-4 {
+    max-width: 25%;
+}
+
+.col-8 {
+    max-width: 75%;
 }
