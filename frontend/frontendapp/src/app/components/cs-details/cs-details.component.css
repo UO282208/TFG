@@ -4,6 +4,10 @@ table {
     margin-top: 15px;
 }
 
+strong {
+    padding-bottom: 10px;
+}
+
 .table thead {
     background-color: #f8f9fa;
 }

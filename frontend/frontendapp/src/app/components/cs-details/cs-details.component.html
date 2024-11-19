@@ -6,13 +6,14 @@
 <div class="form-alert">
   <h3>Restricciones</h3>
   <div class="alert alert-warning" role="alert" *ngIf="csDetails.restrictionsViolated.length">
+      <strong>Restricciones No Cumplidas del Día {{ csDetails.lastDayUploaded | date: 'dd/MM/yyyy' }}</strong>
       <p *ngFor="let msg of csDetails.restrictionsViolated">{{ msg }}</p>
   </div>
   <div *ngIf="csDetails.restrictionsSatisfied.length">
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Restricciones Satisfechas</th>
+          <th>Restricciones Satisfechas del Día {{ csDetails.lastDayUploaded | date: 'dd/MM/yyyy' }}</th>
         </tr>
       </thead>
       <tbody>
