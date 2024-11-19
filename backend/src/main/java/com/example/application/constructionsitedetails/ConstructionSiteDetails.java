@@ -53,6 +53,9 @@ public class ConstructionSiteDetails {
     @Builder.Default
     private List<String> restrictionsViolated = new ArrayList<>();
 
+    @Builder.Default
+    private List<String> restrictionsSatisfied = new ArrayList<>();
+
     @OneToOne(mappedBy = "details")
     @JsonIgnore
     private ConstructionSite constructionSite;

@@ -157,6 +157,7 @@ public class FileSystemStorageService implements StorageService {
 
 		int[] objectCounts = readObjectCounts(filename);
 		List<String> collectedErrors = new ArrayList<>();
+		List<String> satisfiedRestrictions = new ArrayList<>();
 
 		for (Restriction r : details.getAllRestrictions()) {
 			if (new Date().before(Date.from(r.getEndDate().atZone(ZoneId.systemDefault()).toInstant()))){
@@ -167,21 +168,41 @@ public class FileSystemStorageService implements StorageService {
 						{
 							collectedErrors.add("Los transformadores no pueden ser menos de los requeridos (" + r.getTransformers() + ").");
 						}
+						else
+						{
+							satisfiedRestrictions.add("Mínimo de transformadores cumplido (" + r.getTransformers() + ").");
+						}
 						if (objectCounts[Elements.EXPANSION_TANK.index] < r.getExpansionTanks()) 
 						{
 							collectedErrors.add("Los tanques de expansión no pueden ser menos de los requeridos (" + r.getExpansionTanks() + ").");
+						}
+						else
+						{
+							satisfiedRestrictions.add("Mínimo de tanques de expansión cumplido (" + r.getExpansionTanks() + ").");
 						}
 						if (objectCounts[Elements.RADIATOR.index] < r.getRadiators()) 
 						{
 							collectedErrors.add("Los radiadores no pueden ser menos de los requeridos (" + r.getRadiators() + ").");
 						}
+						else
+						{
+							satisfiedRestrictions.add("Mínimo de radiadores cumplido (" + r.getRadiators() + ").");
+						}
 						if (objectCounts[Elements.CONNECTION_POINT.index] < r.getConnectionPoints()) 
 						{
 							collectedErrors.add("Los puntos de conexión no pueden ser menos de los requeridos (" + r.getConnectionPoints() + ").");
 						}
+						else
+						{
+							satisfiedRestrictions.add("Mínimo de puntos de conexión cumplido (" + r.getConnectionPoints() + ").");
+						}
 						if (objectCounts[Elements.FIREWALL.index] < r.getFirewalls()) 
 						{
 							collectedErrors.add("Los muros cortafuegos no pueden ser menos de los requeridos (" + r.getFirewalls() + ").");
+						}
+						else
+						{
+							satisfiedRestrictions.add("Mínimo de muros cortafuegos cumplido (" + r.getFirewalls() + ").");
 						}
 					}
 					else{
@@ -189,21 +210,41 @@ public class FileSystemStorageService implements StorageService {
 						{
 							collectedErrors.add("Los transformadores no pueden ser más de los requeridos (" + r.getTransformers() + ").");
 						}
+						else
+						{
+							satisfiedRestrictions.add("Máximo de transformadores cumplido (" + r.getTransformers() + ").");
+						}
 						if (objectCounts[Elements.EXPANSION_TANK.index] > r.getExpansionTanks()) 
 						{
 							collectedErrors.add("Los tanques de expansión no pueden ser más de los requeridos (" + r.getExpansionTanks() + ").");
+						}
+						else
+						{
+							satisfiedRestrictions.add("Máximo de tanques de expansión cumplido (" + r.getExpansionTanks() + ").");
 						}
 						if (objectCounts[Elements.RADIATOR.index] > r.getRadiators()) 
 						{
 							collectedErrors.add("Los radiadores no pueden ser más de los requeridos (" + r.getRadiators() + ").");
 						}
+						else
+						{
+							satisfiedRestrictions.add("Máximo de radiadores cumplido (" + r.getRadiators() + ").");
+						}
 						if (objectCounts[Elements.CONNECTION_POINT.index] > r.getConnectionPoints()) 
 						{
 							collectedErrors.add("Los puntos de conexión no pueden ser más de los requeridos (" + r.getConnectionPoints() + ").");
 						}
+						else
+						{
+							satisfiedRestrictions.add("Máximo de puntos de conexión cumplido (" + r.getConnectionPoints() + ").");
+						}
 						if (objectCounts[Elements.FIREWALL.index] > r.getFirewalls()) 
 						{
 							collectedErrors.add("Los muros cortafuegos no pueden ser más de los requeridos (" + r.getFirewalls() + ").");
+						}
+						else
+						{
+							satisfiedRestrictions.add("Máximo de muros cortafuegos cumplido (" + r.getFirewalls() + ").");
 						}
 					}
 				}
@@ -211,6 +252,7 @@ public class FileSystemStorageService implements StorageService {
         }
 
 		details.setRestrictionsViolated(collectedErrors);
+		details.setRestrictionsSatisfied(satisfiedRestrictions);
 
 		details.setNumberOfTransformers(details.getNumberOfTransformers() + objectCounts[Elements.TRANSFORMERS.index]);
 		details.setNumberOfExpansionTanks(details.getNumberOfExpansionTanks() + objectCounts[Elements.EXPANSION_TANK.index]);

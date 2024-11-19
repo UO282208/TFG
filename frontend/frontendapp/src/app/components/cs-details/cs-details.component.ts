@@ -24,7 +24,8 @@ export class CsDetailsComponent implements OnInit{
     numberOfConnectionPoints: 0,
     numberOfFirewalls: 0,
     lastDayUploaded: undefined,
-    restrictionsViolated: []
+    restrictionsViolated: [],
+    restrictionsSatisfied: []
   }
   
   csId: number = 0

@@ -6,4 +6,5 @@ export interface GetCsDetailsRequest {
     numberOfFirewalls: number,
     lastDayUploaded?: Date,
     restrictionsViolated: Array<String>
+    restrictionsSatisfied: Array<String>
 }

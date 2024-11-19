@@ -8,6 +8,20 @@
   <div class="alert alert-warning" role="alert" *ngIf="csDetails.restrictionsViolated.length">
       <p *ngFor="let msg of csDetails.restrictionsViolated">{{ msg }}</p>
   </div>
+  <div *ngIf="csDetails.restrictionsSatisfied.length">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Restricciones Satisfechas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let msg of csDetails.restrictionsSatisfied">
+          <td>{{ msg }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <button type="button" class="btn btn-primary" (click)="addRestriction()">
       Añadir Restricciones
   </button>

@@ -56,7 +56,8 @@ describe('CsDetailsComponent', () => {
       numberOfConnectionPoints: 1,
       numberOfFirewalls: 1,
       lastDayUploaded: new Date().toISOString(),
-      restrictionsViolated: []
+      restrictionsViolated: [],
+      restrictionsSatisfied: []
     }));
   });
 
@@ -69,7 +70,9 @@ describe('CsDetailsComponent', () => {
         numberOfConnectionPoints: 1,
         numberOfFirewalls: 1,
         lastDayUploaded: new Date(),
-        restrictionsViolated: [] };
+        restrictionsViolated: [],
+        restrictionsSatisfied: []
+       };
       csDetailsServiceMock.getConstructionSiteDetails.and.returnValue(of(mockDetails));
       
       component.getDetails();
