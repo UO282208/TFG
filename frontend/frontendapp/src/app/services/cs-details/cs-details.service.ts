@@ -15,6 +15,10 @@ export class CsDetailsService {
     return this.http.get(`${this.apiBaseUrl}/api/constructionSite/${csId}`);
   }
 
+  getProcessedFile(filename: string): Observable<Blob> {
+    return this.http.get(`${this.apiBaseUrl}/api/files/${filename}`, { responseType: 'blob' });
+  }
+
   uploadFile(file: File, csId: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);

@@ -20,4 +20,6 @@ public interface StorageService {
 
 	void processFile(String filename, String csId);
 
+    Resource loadFileFromResults(String filename);
+
 }

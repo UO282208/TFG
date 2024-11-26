@@ -14,6 +14,7 @@ import java.io.File;
 import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -275,4 +276,21 @@ public class FileSystemStorageService implements StorageService {
 		}
 		return objectCounts;
 	}
+
+	@Override
+	public Resource loadFileFromResults(String filename) {
+        try {
+            Path filePath = resultsLocation.resolve(filename);
+            Resource resource = new FileSystemResource(filePath);
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                return null; 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
