@@ -83,6 +83,8 @@
 </div>
 </div>
 
+<img *ngIf="isLoading" src="assets/icons/loading.gif" alt="Cargando..." style="width: 70px; height: 60;">
+
 <div *ngIf="message" class="form-alert">
   <div class="alert alert-secondary" role="alert">{{ message }}</div>
 </div>

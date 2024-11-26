@@ -32,6 +32,7 @@ export class CsDetailsComponent implements OnInit{
 
   currentFile?: File | null;
   message = '';
+  isLoading: boolean = false;
 
   constructor(private csDetailsService: CsDetailsService, private router: Router, private route: ActivatedRoute, private tokenService: TokenService) { }
 
@@ -39,6 +40,7 @@ export class CsDetailsComponent implements OnInit{
     if (!this.tokenService.isLoggedIn) {
       this.router.navigate(['/login']);
     }
+    this.isLoading = false;
     this.currentFile = undefined;
     this.route.paramMap.subscribe(params => { this.csId = Number(params.get('csId'))});
     this.getDetails();
@@ -70,12 +72,14 @@ export class CsDetailsComponent implements OnInit{
 
   upload(): void {
     if (this.currentFile) {
+      this.isLoading = true;
       this.message = 'El archivo está siendo procesado, por favor espere entre 15 a 30 segundos antes de que se complete la operación.'
       this.csDetailsService.uploadFile(this.currentFile, String(this.csId)).subscribe({
         next: (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             this.message = event.body.message;
             this.currentFile = null;
+            this.isLoading = false;
             this.message = 'Subida satisfactoria'
             this.fileInput.nativeElement.value = '';
           }
